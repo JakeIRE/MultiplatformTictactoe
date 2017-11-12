@@ -37,6 +37,7 @@ public class MainMenu extends JFrame implements ActionListener {
     private Soap db;
     private String type = "O";
     private boolean threadRun = true;
+    private boolean inviteBool = false;
     // End of variables declaration    
     
     public MainMenu(String uname, Soap db){
@@ -146,6 +147,7 @@ public class MainMenu extends JFrame implements ActionListener {
             threadRun = false;
         }
         else {
+            inviteBool = false;
             db.denyGame(uname);
             threadRun = false;
         }
@@ -165,5 +167,12 @@ public class MainMenu extends JFrame implements ActionListener {
     public String getStats(){
         return db.getStats(uname);
     }
+
+    boolean getBoolDisplay() {
+        return inviteBool;
+    }
     
+    void setBoolDisplay() {
+        inviteBool = true;
+    }
 }
