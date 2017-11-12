@@ -4,6 +4,7 @@ package ConnectSoap;
 import javax.xml.ws.WebServiceRef;
 import SoapConnector.*;
 import java.util.List;
+//test it
         
         
 public class Soap {
