@@ -1,5 +1,6 @@
 package colummullallycom.tictactoesoap;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -29,6 +30,14 @@ public class Login extends AppCompatActivity {
             public void onClick(View v){
                 uName = uNameIn.getText().toString();
                 password=passwordIn.getText().toString();
+                //TODO
+                //checks and stuff
+                Intent myIntent=new Intent(Login.this,Menu.class);
+                Bundle bundle= new Bundle();
+                bundle.putString("Code",uName);
+                myIntent.putExtras(bundle);
+                startActivity(myIntent);
+
             }
         });
 
