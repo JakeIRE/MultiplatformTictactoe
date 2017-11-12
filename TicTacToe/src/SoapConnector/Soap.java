@@ -84,6 +84,6 @@ public class Soap {
     }
 
     public String getStats(String uname) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return port.getStats(uname);
     }
 }
