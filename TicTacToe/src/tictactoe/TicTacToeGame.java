@@ -18,7 +18,7 @@ import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import static java.lang.Thread.sleep;
 import java.util.logging.Level;
-import SoapConnector.Soap;
+import ConnectSoap.Soap;
 import java.util.logging.Logger;
 
 

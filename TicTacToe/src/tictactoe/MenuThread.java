@@ -6,7 +6,7 @@
 package tictactoe;
 
 
-import SoapConnector.Soap;
+import ConnectSoap.Soap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -38,7 +38,8 @@ public class MenuThread extends Thread{
                     threadRun = false;
                 }
                 joiner = db.getJoiner(uname);
-                if(!joiner.equals("")){
+                if(!joiner.equals("") || m.getBoolDisplay()){
+                    m.setBoolDisplay();
                     m.displayJoinerOption(joiner);
                 }
                 sleep(100);

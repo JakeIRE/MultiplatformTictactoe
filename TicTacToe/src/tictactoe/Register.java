@@ -8,7 +8,7 @@ package tictactoe;
 import javax.xml.soap.*;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import SoapConnector.Soap;
+import ConnectSoap.Soap;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import static java.awt.SystemColor.menuText;
