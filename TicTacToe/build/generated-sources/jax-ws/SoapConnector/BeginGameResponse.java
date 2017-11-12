@@ -1,4 +1,4 @@
-//jh
+
 package SoapConnector;
 
 import javax.xml.bind.annotation.XmlAccessType;
