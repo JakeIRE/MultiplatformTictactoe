@@ -6,7 +6,7 @@
 package tictactoe;
 
 
-import SoapConnector.Soap;
+import ConnectSoap.Soap;
 import static java.lang.Thread.sleep;
 import java.util.logging.Level;
 import java.util.logging.Logger;

@@ -1,18 +1,20 @@
 
-package SoapConnector;
+package ConnectSoap;
 
 import javax.xml.ws.WebServiceRef;
-import tttWebData.TicTacToeWebService;
+import SoapConnector.*;
+import java.util.List;
         
         
 public class Soap {
     @WebServiceRef(wsdlLocation="http://localhost:8080/"
             + "TicTacToeWebClient/TicTacToeWebService?wsdl")
-    static TicTacToeWebClient web;
+    static TicTacToeWebService_Service web;
     
     private TicTacToeWebService port;
     public Soap(){
-       port = web.getTicTacToeWebServicePort();
+        web = new TicTacToeWebService_Service();
+        port = web.getTicTacToeWebServicePort();
    }
     
     public void beginGame(){
@@ -28,7 +30,12 @@ public class Soap {
     }
     
     public Object[] getOptions(String u){
-        return port.getOptions(u);
+        List<Object> s = port.getOptions(u);
+        Object[] str = new Object[s.size()];
+        for(int i = 0; i < s.size() ; i++){
+            str[i] = s.get(i);
+        }
+        return str;
     }
     
     public void setOnline(String u){
@@ -80,7 +87,7 @@ public class Soap {
     }
 
     public void resetGame(String uname) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        port.resetGame(uname);
     }
 
     public String getStats(String uname) {
