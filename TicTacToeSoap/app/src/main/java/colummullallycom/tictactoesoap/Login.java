@@ -32,6 +32,11 @@ public class Login extends AppCompatActivity {
                 password=passwordIn.getText().toString();
                 //TODO
                 //checks and stuff
+                /*String output = db.loginVerify(uname, pass);
+                if(output.length() == 0)
+                    continueMain(uname);
+                else
+                    menuText.setText(output);*/
                 Intent myIntent=new Intent(Login.this,Menu.class);
                 Bundle bundle= new Bundle();
                 bundle.putString("Code",uName);
