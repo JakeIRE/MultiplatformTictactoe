@@ -22,7 +22,7 @@ public class Soap{
     public void startWebAccess(){
                     SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
                     PropertyInfo fromProp =new PropertyInfo();
-                    fromProp.setName("FromCurrency");
+                   /* fromProp.setName("FromCurrency");
                     fromProp.setValue(fromCurrency);
                     fromProp.setType(String.class);
                     request.addProperty(fromProp);
@@ -43,6 +43,6 @@ public class Soap{
 
                     //androidHttpTransport.call(SOAP_ACTION, envelope);
                     //SoapPrimitive response = (SoapPrimitive)envelope.getResponse();
-                    //webResponse = response.toString();
+                    //webResponse = response.toString();*/
             }
 }
