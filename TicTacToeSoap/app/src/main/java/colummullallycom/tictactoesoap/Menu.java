@@ -17,10 +17,20 @@ public class Menu extends AppCompatActivity {
         Bundle b = iin.getExtras();
         uName = (String) b.get("Code");
         inviteBtn = (Button) findViewById(R.id.button9);
+        leaderboardBtn=(Button)findViewById(R.id.button4);
     }
     protected void onStart() {
         super.onStart();
-
+        leaderboardBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent=new Intent(Menu.this,LeaderBoard.class);
+                Bundle bundle= new Bundle();
+                bundle.putString("Code",uName);
+                myIntent.putExtras(bundle);
+                startActivity(myIntent);
+            }
+        });
         inviteBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
