@@ -183,7 +183,7 @@ private void writeMetaData(ResultSet resultSet) throws SQLException {
             u = resultSet.getString("uname");
             p = resultSet.getString("password");
             if(p.equals(pass)){
-                return uname;
+                return "";
             }
             else
                 return "Password Incorrect";
