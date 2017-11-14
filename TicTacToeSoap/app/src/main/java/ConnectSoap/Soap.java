@@ -14,7 +14,7 @@ public class Soap{
     private static final String METHOD_NAME = "loginVerify";
     private static final String NAMESPACE = "http://tttWebData/";
     private static final String SOAP_ACTION = NAMESPACE+"/"+METHOD_NAME;
-    private static final String URL = "http:/localhost/TicTacToeWebClient/TicTacToeWebService?wsdl";
+    private static final String URL = "http:/10.0.2.2:8080/TicTacToeWebClient/TicTacToeWebService?wsdl";
 
     public String loginVerify(String uname, String pass){
                 SoapObject request = new SoapObject(NAMESPACE, "loginVerify");
