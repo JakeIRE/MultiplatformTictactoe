@@ -10,18 +10,34 @@ import org.ksoap2.transport.HttpTransportSE;
 
 public class Soap{
 
-    private final String NAMESPACE = "http://www.webserviceX.NET/";
-    private final String URL = "http://www.webservicex.net/CurrencyConvertor.asmx";
-    private final String SOAP_ACTION = "http://www.webserviceX.NET/ConversionRate";
-    private final String METHOD_NAME = "ConversionRate";
 
-    private String webResponse = "";
+    private static final String METHOD_NAME = "loginVerify";
+    private static final String NAMESPACE = "http://tttWebData/";
+    private static final String SOAP_ACTION = NAMESPACE+"/"+METHOD_NAME;
+    private static final String URL = "http:/localhost/TicTacToeWebClient/TicTacToeWebService?wsdl";
+
+    public String loginVerify(String uname, String pass){
+                SoapObject request = new SoapObject(NAMESPACE, "loginVerify");
+                request.addProperty("uname", uname);
+                request.addProperty("pass", pass);
+
+                SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+
+                envelope.setOutputSoapObject(request);
+
+                HttpTransportSE ht = new HttpTransportSE(URL);
+                try {
+                    ht.call(SOAP_ACTION, envelope);
+                    SoapPrimitive response = (SoapPrimitive)envelope.getResponse();
+                    return response.toString();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return "Error";
+            }
 
 
-
-    public void startWebAccess(){
-                    SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-                    PropertyInfo fromProp =new PropertyInfo();
                    /* fromProp.setName("FromCurrency");
                     fromProp.setValue(fromCurrency);
                     fromProp.setType(String.class);
@@ -44,5 +60,4 @@ public class Soap{
                     //androidHttpTransport.call(SOAP_ACTION, envelope);
                     //SoapPrimitive response = (SoapPrimitive)envelope.getResponse();
                     //webResponse = response.toString();*/
-            }
 }
