@@ -14,15 +14,16 @@ public class Soap{
 
     private static final String NAMESPACE = "http://tttWebData/";
     private static final String URL = "http:/10.0.2.2:8080/TicTacToeWebClient/TicTacToeWebService?wsdl";
-    private static String returner;
+    private String returner;
 
     public String loginVerify(final String uname, final String pass){
                 final String METHOD_NAME = "loginVerify";
                 final String SOAP_ACTION = NAMESPACE+"/"+METHOD_NAME;
+
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-
+                        returner ="6";
                         SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
                         request.addProperty("uname", uname);
                         request.addProperty("pass", pass);
@@ -35,12 +36,12 @@ public class Soap{
                         try {
                             ht.call(SOAP_ACTION, envelope);
                             SoapPrimitive response = (SoapPrimitive)envelope.getResponse();
-                            returner = envelope.getResponse().toString();
+                            //response.toString();
 
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                        returner =  "Error";
+
                     }
                 }).start();
                 return returner;

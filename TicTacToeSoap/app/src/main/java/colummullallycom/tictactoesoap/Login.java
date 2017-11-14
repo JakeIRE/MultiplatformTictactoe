@@ -42,12 +42,12 @@ public class Login extends AppCompatActivity {
                 Soap db =new Soap();
                 String output = db.loginVerify(uName, password);
                 t.setText(output);
-                if(output.length() == 0){
+               /* if(!output.equals("")){
                 Intent myIntent=new Intent(Login.this,Menu.class);
                 Bundle bundle= new Bundle();
                 bundle.putString("Code",uName);
                 myIntent.putExtras(bundle);
-                startActivity(myIntent);}
+                startActivity(myIntent);}*/
 
 
 
