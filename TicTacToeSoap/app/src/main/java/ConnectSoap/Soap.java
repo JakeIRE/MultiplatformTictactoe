@@ -35,7 +35,7 @@ public class Soap{
                         try {
                             ht.call(SOAP_ACTION, envelope);
                             SoapPrimitive response = (SoapPrimitive)envelope.getResponse();
-                            returner = response.toString();
+                            returner = envelope.getResponse().toString();
 
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -46,20 +46,27 @@ public class Soap{
                 return returner;
             }
 
-            public void setOffline(String uname){
+            public void setOffline(final String uname){
+                final String METHOD_NAME = "setOffline";
+                final String SOAP_ACTION = NAMESPACE+"/"+METHOD_NAME;
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        SoapObject request = new SoapObject(NAMESPACE, "setOffline");
+                        request.addProperty("u", uname);
 
-                SoapObject request = new SoapObject(NAMESPACE, "setOffline");
-                request.addProperty("u", uname);
+                        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+                        envelope.setOutputSoapObject(request);
+                        HttpTransportSE ht = new HttpTransportSE(URL);
 
-                SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+                        try {
+                            ht.call(SOAP_ACTION, envelope);
 
-                HttpTransportSE ht = new HttpTransportSE(URL);
-                try {
-                    ht.call(NAMESPACE+"/setOffline", envelope);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
             }
 
 
