@@ -8,6 +8,8 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 
+import ConnectSoap.Soap;
+
 public class Login extends AppCompatActivity {
     EditText uNameIn;
     String uName,password;
@@ -32,16 +34,16 @@ public class Login extends AppCompatActivity {
                 password=passwordIn.getText().toString();
                 //TODO
                 //checks and stuff
-                /*String output = db.loginVerify(uname, pass);
-                if(output.length() == 0)
-                    continueMain(uname);
-                else
-                    menuText.setText(output);*/
+                Soap db =new Soap();
+                String output = db.loginVerify(uName, password);
+                if(output.length() == 0){
                 Intent myIntent=new Intent(Login.this,Menu.class);
                 Bundle bundle= new Bundle();
                 bundle.putString("Code",uName);
                 myIntent.putExtras(bundle);
-                startActivity(myIntent);
+                startActivity(myIntent);}
+
+
 
             }
         });
