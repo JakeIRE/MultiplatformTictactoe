@@ -40,7 +40,6 @@ public class Login extends AppCompatActivity {
                 //TODO
                 //checks and stuff
                 Soap db =new Soap();
-                db.setOffline(uName);
                 String output = db.loginVerify(uName, password);
                 t.setText(output);
                 if(output.length() == 0){
