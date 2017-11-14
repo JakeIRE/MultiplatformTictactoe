@@ -14,7 +14,7 @@ public class Soap{
 
     private static final String NAMESPACE = "http://tttWebData/";
     private static final String URL = "http:/10.0.2.2:8080/TicTacToeWebClient/TicTacToeWebService?wsdl";
-    private static String returner;
+    private String returner;
 
     public String loginVerify(final String uname, final String pass){
                 final String METHOD_NAME = "loginVerify";
@@ -35,12 +35,12 @@ public class Soap{
                         try {
                             ht.call(SOAP_ACTION, envelope);
                             SoapPrimitive response = (SoapPrimitive)envelope.getResponse();
-                            returner = envelope.getResponse().toString();
+                            setReturner(envelope.getResponse().toString() + " Success/");
 
                         } catch (Exception e) {
                             e.printStackTrace();
+                            setReturner("Error");
                         }
-                        returner =  "Error";
                     }
                 }).start();
                 return returner;
@@ -69,6 +69,10 @@ public class Soap{
                 }).start();
             }
 
+
+            public void setReturner(String yolk){
+                returner = yolk;
+            }
 
 
                    /* fromProp.setName("FromCurrency");
