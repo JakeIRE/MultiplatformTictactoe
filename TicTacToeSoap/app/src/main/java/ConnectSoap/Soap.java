@@ -14,44 +14,39 @@ public class Soap{
 
     private static final String NAMESPACE = "http://tttWebData/";
     private static final String URL = "http:/10.0.2.2:8080/TicTacToeWebClient/TicTacToeWebService?wsdl";
-    private String returner;
+    private static volatile String returner;
 
-    public String loginVerify(final String uname, final String pass){
+    public String loginVerify(final String uname, final String pass) throws InterruptedException {
                 final String METHOD_NAME = "loginVerify";
                 final String SOAP_ACTION = NAMESPACE+"/"+METHOD_NAME;
 
-                new Thread(new Runnable() {
+                Thread t=new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        returner ="6";
                         SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
                         request.addProperty("uname", uname);
                         request.addProperty("pass", pass);
 
                         SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
-
+                        envelope.dotNet=true;
                         envelope.setOutputSoapObject(request);
 
                         HttpTransportSE ht = new HttpTransportSE(URL);
                         try {
                             ht.call(SOAP_ACTION, envelope);
-                            SoapPrimitive response = (SoapPrimitive)envelope.getResponse();
-<<<<<<< HEAD
+                            final SoapPrimitive response = (SoapPrimitive)envelope.getResponse();
+                            returner = "here";
                             //response.toString();
-=======
-                            setReturner(envelope.getResponse().toString() + " Success/");
->>>>>>> 02516326d8ef0295fbe511d14a81e4ae083f848a
+                            returner = response.toString() + " Success";
 
                         } catch (Exception e) {
                             e.printStackTrace();
-                            setReturner("Error");
                         }
-<<<<<<< HEAD
 
-=======
->>>>>>> 02516326d8ef0295fbe511d14a81e4ae083f848a
                     }
-                }).start();
+                });
+                t.start();
+                t.join();
                 return returner;
             }
 

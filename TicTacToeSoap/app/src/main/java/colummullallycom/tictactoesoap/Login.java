@@ -40,7 +40,12 @@ public class Login extends AppCompatActivity {
                 //TODO
                 //checks and stuff
                 Soap db =new Soap();
-                String output = db.loginVerify(uName, password);
+                String output = null;
+                try {
+                    output = db.loginVerify(uName, password);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 t.setText(output);
                /* if(!output.equals("")){
                 Intent myIntent=new Intent(Login.this,Menu.class);
