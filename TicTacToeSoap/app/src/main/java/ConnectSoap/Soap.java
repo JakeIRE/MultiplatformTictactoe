@@ -45,6 +45,23 @@ public class Soap{
                 return "Error";
             }
 
+            public void setOffline(String uname){
+
+                SoapObject request = new SoapObject(NAMESPACE, "setOffline");
+                request.addProperty("u", uname);
+
+                SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+
+                HttpTransportSE ht = new HttpTransportSE(URL);
+                try {
+                    ht.call(NAMESPACE+"/setOffline", envelope);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+
 
                    /* fromProp.setName("FromCurrency");
                     fromProp.setValue(fromCurrency);
