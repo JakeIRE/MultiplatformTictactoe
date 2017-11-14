@@ -46,7 +46,7 @@ public class Soap{
 
                 HttpTransportSE ht = new HttpTransportSE(URL);
                 try {
-                    ht.call(SOAP_ACTION, envelope);
+                    ht.call(NAMESPACE+"/setOffline", envelope);
 
                 } catch (Exception e) {
                     e.printStackTrace();
