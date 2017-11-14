@@ -36,12 +36,20 @@ public class Soap{
                         try {
                             ht.call(SOAP_ACTION, envelope);
                             SoapPrimitive response = (SoapPrimitive)envelope.getResponse();
+<<<<<<< HEAD
                             //response.toString();
+=======
+                            setReturner(envelope.getResponse().toString() + " Success/");
+>>>>>>> 02516326d8ef0295fbe511d14a81e4ae083f848a
 
                         } catch (Exception e) {
                             e.printStackTrace();
+                            setReturner("Error");
                         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 02516326d8ef0295fbe511d14a81e4ae083f848a
                     }
                 }).start();
                 return returner;
@@ -70,6 +78,10 @@ public class Soap{
                 }).start();
             }
 
+
+            public void setReturner(String yolk){
+                returner = yolk;
+            }
 
 
                    /* fromProp.setName("FromCurrency");
