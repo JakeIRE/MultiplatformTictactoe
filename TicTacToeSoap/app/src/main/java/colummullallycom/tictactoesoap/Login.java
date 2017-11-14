@@ -7,20 +7,27 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+
+import ConnectSoap.Soap;
 
 public class Login extends AppCompatActivity {
     EditText uNameIn;
     String uName,password;
     EditText passwordIn;
     Button sBtn,rBtn;
+    TextView t;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login2);
         uNameIn = (EditText) findViewById(R.id.editText);
+        uNameIn.setText("");
         passwordIn = (EditText) findViewById(R.id.editText2);
         sBtn = (Button) findViewById(R.id.button2);
         rBtn = (Button) findViewById(R.id.button);
+        t=(TextView) findViewById(R.id.textView);
+
     }
     protected void onStart() {
         super.onStart();
@@ -32,16 +39,18 @@ public class Login extends AppCompatActivity {
                 password=passwordIn.getText().toString();
                 //TODO
                 //checks and stuff
-                /*String output = db.loginVerify(uname, pass);
-                if(output.length() == 0)
-                    continueMain(uname);
-                else
-                    menuText.setText(output);*/
+                Soap db =new Soap();
+                db.setOffline(uName);
+                String output = db.loginVerify(uName, password);
+                t.setText(output);
+                if(output.length() == 0){
                 Intent myIntent=new Intent(Login.this,Menu.class);
                 Bundle bundle= new Bundle();
                 bundle.putString("Code",uName);
                 myIntent.putExtras(bundle);
-                startActivity(myIntent);
+                startActivity(myIntent);}
+
+
 
             }
         });
