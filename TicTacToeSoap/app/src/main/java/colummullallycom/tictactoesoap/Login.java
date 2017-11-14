@@ -22,6 +22,7 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login2);
         uNameIn = (EditText) findViewById(R.id.editText);
+        uNameIn.setText("");
         passwordIn = (EditText) findViewById(R.id.editText2);
         sBtn = (Button) findViewById(R.id.button2);
         rBtn = (Button) findViewById(R.id.button);
@@ -39,6 +40,7 @@ public class Login extends AppCompatActivity {
                 //TODO
                 //checks and stuff
                 Soap db =new Soap();
+                db.setOffline(uName);
                 String output = db.loginVerify(uName, password);
                 t.setText(output);
                 if(output.length() == 0){

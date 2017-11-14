@@ -12,11 +12,10 @@ import org.ksoap2.transport.HttpTransportSE;
 public class Soap{
     
 
-    private static final String METHOD_NAME = "loginVerify";
+    private static final String METHOD_NAME = "setOffline";
     private static final String NAMESPACE = "http://tttWebData/";
-    private static final String SOAP_ACTION = NAMESPACE+"/"+METHOD_NAME;
-    private static final String URL = "http:/localhost/TicTacToeWebClient/TicTacToeWebService?wsdl";
-
+    private static final String SOAP_ACTION = "http://tttWebData/setOffline";
+    private static final String URL = "http:/10.0.2.2:8080/TicTacToeWebClient/TicTacToeWebService?wsdl";
     public String loginVerify(String uname, String pass){
                 SoapObject request = new SoapObject(NAMESPACE, "loginVerify");
                 request.addProperty("uname", uname);
@@ -38,20 +37,25 @@ public class Soap{
                 return "Error";
             }
 
-            public void setOffline(String uname){
+            public void setOffline(final String uname){
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+                        request.addProperty("u", uname);
 
-                SoapObject request = new SoapObject(NAMESPACE, "setOffline");
-                request.addProperty("u", uname);
+                        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+                        envelope.setOutputSoapObject(request);
+                        HttpTransportSE ht = new HttpTransportSE(URL);
+                        try {
+                            ht.call(SOAP_ACTION, envelope);
 
-                SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
 
-                HttpTransportSE ht = new HttpTransportSE(URL);
-                try {
-                    ht.call(NAMESPACE+"/setOffline", envelope);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
             }
 
 
