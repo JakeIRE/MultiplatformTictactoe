@@ -1,5 +1,6 @@
 package ConnectSoap;
 
+import org.kobjects.util.Strings;
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.PropertyInfo;
 import org.ksoap2.serialization.SoapObject;
@@ -11,30 +12,38 @@ import org.ksoap2.transport.HttpTransportSE;
 public class Soap{
 
 
-    private static final String METHOD_NAME = "loginVerify";
     private static final String NAMESPACE = "http://tttWebData/";
-    private static final String SOAP_ACTION = NAMESPACE+"/"+METHOD_NAME;
     private static final String URL = "http:/10.0.2.2:8080/TicTacToeWebClient/TicTacToeWebService?wsdl";
+    private static String returner;
 
-    public String loginVerify(String uname, String pass){
-                SoapObject request = new SoapObject(NAMESPACE, "loginVerify");
-                request.addProperty("uname", uname);
-                request.addProperty("pass", pass);
+    public String loginVerify(final String uname, final String pass){
+                final String METHOD_NAME = "loginVerify";
+                final String SOAP_ACTION = NAMESPACE+"/"+METHOD_NAME;
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
 
-                SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+                        SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+                        request.addProperty("uname", uname);
+                        request.addProperty("pass", pass);
 
-                envelope.setOutputSoapObject(request);
+                        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
 
-                HttpTransportSE ht = new HttpTransportSE(URL);
-                try {
-                    ht.call(SOAP_ACTION, envelope);
-                    SoapPrimitive response = (SoapPrimitive)envelope.getResponse();
-                    return response.toString();
+                        envelope.setOutputSoapObject(request);
 
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                return "Error";
+                        HttpTransportSE ht = new HttpTransportSE(URL);
+                        try {
+                            ht.call(SOAP_ACTION, envelope);
+                            SoapPrimitive response = (SoapPrimitive)envelope.getResponse();
+                            returner = response.toString();
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        returner =  "Error";
+                    }
+                }).start();
+                return returner;
             }
 
             public void setOffline(String uname){
