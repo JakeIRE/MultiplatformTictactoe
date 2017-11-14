@@ -10,14 +10,7 @@ import org.ksoap2.transport.HttpTransportSE;
 
 
 public class Soap{
-
-<<<<<<< HEAD
-    private final String NAMESPACE ="http://localhost:8080/"+ "TicTacToeWebClient/TicTacToeWebService?wsdl";
-    private final String URL = "http://www.webservicex.net/CurrencyConvertor.asmx";
-    private final String SOAP_ACTION = "http://www.webserviceX.NET/ConversionRate";
-    private final String METHOD_NAME = "ConversionRate";
-=======
->>>>>>> 0546907b554aecff65896853329692f00ab7492a
+    
 
     private static final String METHOD_NAME = "loginVerify";
     private static final String NAMESPACE = "http://tttWebData/";
