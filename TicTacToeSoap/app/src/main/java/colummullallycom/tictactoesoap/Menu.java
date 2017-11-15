@@ -6,9 +6,17 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import ConnectSoap.Soap;
+
+import static java.lang.Thread.sleep;
+
 public class Menu extends AppCompatActivity {
     String uName;
+    Thread t;
     Button quitBtn,inviteBtn,leaderboardBtn;
+    Soap db = new Soap();
+    boolean threadRun = true;
+    boolean displayJoiner = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -16,11 +24,45 @@ public class Menu extends AppCompatActivity {
         Intent iin= getIntent();
         Bundle b = iin.getExtras();
         uName = (String) b.get("Code");
+        t =  new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(threadRun){
+                    try {
+                        String gameStart = db.checkGameStart(uName);
+                        if(!gameStart.equals("")){
+                            nextScreen(gameStart);
+                            threadRun = false;
+                        }
+                        String joiner = db.getJoiner(uName);
+                        if(!joiner.equals("") || displayJoiner){
+                            displayJoiner = true;
+                            displayJoinerOption(joiner);
+                        }
+                        sleep(100);
+                    } catch (Exception ex) {
+                        System.out.println("You're dumb");
+                    }
+                }
+            }
+        });
+        t.start();
         inviteBtn = (Button) findViewById(R.id.button9);
         leaderboardBtn=(Button)findViewById(R.id.button4);
-        MenuThread t= new MenuThread(uName,getApplicationContext());
-        new handler;
     }
+
+    private void nextScreen(String gameStart) {
+        threadRun = false;
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void displayJoinerOption(String joiner) {
+    }
+
     protected void onStart() {
         super.onStart();
         leaderboardBtn.setOnClickListener(new View.OnClickListener() {
@@ -61,6 +103,10 @@ public class Menu extends AppCompatActivity {
 
             }
         });
+
+    }
+
+    public void test(){
 
     }
 }
