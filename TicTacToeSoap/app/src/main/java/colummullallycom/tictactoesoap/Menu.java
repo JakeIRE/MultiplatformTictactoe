@@ -69,42 +69,20 @@ public class Menu extends AppCompatActivity {
         }
     }
 
-    private void displayJoinerOption(String joiner, Context baseContext) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    private void displayJoinerOption(String joiner, Context baseContext)  {
+            AlertDialog.Builder dialog = new AlertDialog.Builder(baseContext);
 
-        builder.setTitle("Title");
-        builder.setMessage("Is this a question?");
-
-
-        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                // Code that is executed when clicking YES
-
-                dialog.dismiss();
-            }
-
-        });
-
-
-        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                // Code that is executed when clicking NO
-
-                dialog.dismiss();
-            }
-
-        });
-
-
-        AlertDialog alert = builder.create();
-        alert.show();
-        inviteBtn.setText("end of dialog");
+            dialog.setTitle( "Invite" )
+                    .setMessage("Play with "+joiner+"?")
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialoginterface, int i) {
+                                        dialoginterface.cancel();
+                                    }
+                        })
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialoginterface, int i) {
+                        }
+                    }).show();
     }
 
     protected void onStart() {
