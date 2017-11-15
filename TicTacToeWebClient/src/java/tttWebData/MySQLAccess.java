@@ -197,7 +197,7 @@ private void writeMetaData(ResultSet resultSet) throws SQLException {
       return null;
   }
   
-  public Object[] getOptions(String u) {
+  public String getOptions(String u) {
       if(!connectionFlag)
         connectDataBase();
     try {
@@ -213,7 +213,7 @@ private void writeMetaData(ResultSet resultSet) throws SQLException {
                 output +="," +next;
         }
         
-        return output.split(",");
+        return output;
     }
     catch(Exception e){
         

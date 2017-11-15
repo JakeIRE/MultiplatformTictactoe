@@ -35,7 +35,7 @@ import javax.xml.bind.annotation.XmlType;
 public class GetOptionsResponse {
 
     @XmlElement(name = "return", nillable = true)
-    protected List<Object> _return;
+    protected String _return;
 
     /**
      * Gets the value of the return property.
@@ -59,9 +59,9 @@ public class GetOptionsResponse {
      * 
      * 
      */
-    public List<Object> getReturn() {
+    public String getReturn() {
         if (_return == null) {
-            _return = new ArrayList<Object>();
+            _return = new String();
         }
         return this._return;
     }

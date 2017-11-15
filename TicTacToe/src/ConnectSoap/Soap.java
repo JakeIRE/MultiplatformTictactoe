@@ -27,12 +27,7 @@ public class Soap {
     }
     
     public Object[] getOptions(String u){
-        List<Object> s = port.getOptions(u);
-        Object[] str = new Object[s.size()];
-        for(int i = 0; i < s.size() ; i++){
-            str[i] = s.get(i);
-        }
-        return str;
+        return port.getOptions(u).split(",");
     }
     
     public void setOnline(String u){
