@@ -35,16 +35,46 @@ public class Soap{
                         try {
                             ht.call(SOAP_ACTION, envelope);
                             SoapPrimitive response = (SoapPrimitive)envelope.getResponse();
-                            setReturner(envelope.getResponse().toString() + " Success/");
+                            returner = envelope.getResponse().toString() + " Success/";
 
                         } catch (Exception e) {
                             e.printStackTrace();
-                            setReturner("Error");
+                            returner = "Error";
                         }
                     }
                 }).start();
                 return returner;
             }
+
+    public String register(final String uname, final String pass){
+        final String METHOD_NAME = "register";
+        final String SOAP_ACTION = NAMESPACE+"/"+METHOD_NAME;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+                request.addProperty("uname", uname);
+                request.addProperty("pass", pass);
+
+                SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+
+                envelope.setOutputSoapObject(request);
+
+                HttpTransportSE ht = new HttpTransportSE(URL);
+                try {
+                    ht.call(SOAP_ACTION, envelope);
+                    SoapPrimitive response = (SoapPrimitive)envelope.getResponse();
+                    returner = envelope.getResponse().toString() + " Success/";
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    returner = "Error";
+                }
+            }
+        }).start();
+        return returner;
+    }
 
             public void setOffline(final String uname){
                 final String METHOD_NAME = "setOffline";
@@ -67,11 +97,6 @@ public class Soap{
                         }
                     }
                 }).start();
-            }
-
-
-            public void setReturner(String yolk){
-                returner = yolk;
             }
 
 
