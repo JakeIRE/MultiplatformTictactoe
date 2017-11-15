@@ -40,14 +40,19 @@ public class Login extends AppCompatActivity {
                 //TODO
                 //checks and stuff
                 Soap db =new Soap();
-                String output = db.loginVerify(uName, password);
+                String output = null;
+                try {
+                    output = db.loginVerify(uName, password);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 t.setText(output);
-                if(output.length() == 0){
+               /* if(!output.equals("")){
                 Intent myIntent=new Intent(Login.this,Menu.class);
                 Bundle bundle= new Bundle();
                 bundle.putString("Code",uName);
                 myIntent.putExtras(bundle);
-                startActivity(myIntent);}
+                startActivity(myIntent);}*/
 
 
 
