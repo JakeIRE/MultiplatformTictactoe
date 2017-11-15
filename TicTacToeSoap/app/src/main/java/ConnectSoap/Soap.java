@@ -37,7 +37,7 @@ public class Soap{
                             ht.call(SOAP_ACTION, envelope);
                             try {
                                 SoapPrimitive response = (SoapPrimitive) envelope.getResponse();
-                                returner = envelope.getResponse().toString();
+                                returner = response.toString();
                             }
                             catch(Exception e){
                                 returner = "";
@@ -78,7 +78,7 @@ public class Soap{
                     ht.call(SOAP_ACTION, envelope);
                     try {
                         SoapPrimitive response = (SoapPrimitive) envelope.getResponse();
-                        returner = envelope.getResponse().toString();
+                        returner = response.toString();
                     }
                     catch(Exception e){
                         returner = "";
@@ -118,7 +118,7 @@ public class Soap{
                     ht.call(SOAP_ACTION, envelope);
                     try {
                         SoapPrimitive response = (SoapPrimitive) envelope.getResponse();
-                        str = envelope.getResponse().toString().split(",");
+                        str = response.toString().split(",");
                     }
                     catch(Exception e){
                         returner = "";
@@ -215,7 +215,7 @@ public class Soap{
                     ht.call(SOAP_ACTION, envelope);
                     try {
                         SoapPrimitive response = (SoapPrimitive) envelope.getResponse();
-                        returner = envelope.getResponse().toString();
+                        returner = response.toString();
                     }
                     catch(Exception e){
                         returner = "";
@@ -313,7 +313,7 @@ public class Soap{
                     ht.call(SOAP_ACTION, envelope);
                     try {
                         SoapPrimitive response = (SoapPrimitive) envelope.getResponse();
-                        returner = envelope.getResponse().toString();
+                        returner = response.toString();
                     }
                     catch(Exception e){
                         returner = "";
@@ -382,7 +382,7 @@ public class Soap{
                     ht.call(SOAP_ACTION, envelope);
                     try {
                         SoapPrimitive response = (SoapPrimitive) envelope.getResponse();
-                        returner = envelope.getResponse().toString();
+                        returner = response.toString();
                     }
                     catch(Exception e){
                         returner = "";
@@ -572,7 +572,7 @@ public class Soap{
                     ht.call(SOAP_ACTION, envelope);
                     try {
                         SoapPrimitive response = (SoapPrimitive) envelope.getResponse();
-                        returner = envelope.getResponse().toString();
+                        returner = response.toString();
                     }
                     catch(Exception e){
                         returner = "";
@@ -594,7 +594,7 @@ public class Soap{
     }
 
     public String[] getLeaderboard(){
-        final String METHOD_NAME = "getTurn";
+        final String METHOD_NAME = "getLeaderboard";
         final String SOAP_ACTION = NAMESPACE+"/"+METHOD_NAME;
         Thread t = new Thread(new Runnable() {
             @Override
@@ -613,10 +613,10 @@ public class Soap{
                     ht.call(SOAP_ACTION, envelope);
                     try {
                         SoapPrimitive response = (SoapPrimitive) envelope.getResponse();
-                        str = envelope.getResponse().toString().split(",");
+                        returner = response.toString();
                     }
                     catch(Exception e){
-                        returner = "";
+                        returner = e.toString();
                     }
 
                 } catch (Exception e) {
@@ -631,7 +631,7 @@ public class Soap{
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        return str;
+        return returner.split(",");
     }
 
 

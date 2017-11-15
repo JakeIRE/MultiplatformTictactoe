@@ -18,6 +18,10 @@
 
 <xs:element name="getJoinerResponse" type="tns:getJoinerResponse"/>
 
+<xs:element name="getLeaderboard" type="tns:getLeaderboard"/>
+
+<xs:element name="getLeaderboardResponse" type="tns:getLeaderboardResponse"/>
+
 <xs:element name="getOptions" type="tns:getOptions"/>
 
 <xs:element name="getOptionsResponse" type="tns:getOptionsResponse"/>
@@ -77,6 +81,16 @@
 </xs:complexType>
 
 <xs:complexType name="getStatsResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getLeaderboard">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="getLeaderboardResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:string" minOccurs="0"/>
 </xs:sequence>
@@ -183,13 +197,13 @@
 <xs:sequence/>
 </xs:complexType>
 
-<xs:complexType name="hello">
+<xs:complexType name="getOptions">
 <xs:sequence>
-<xs:element name="name" type="xs:string" minOccurs="0"/>
+<xs:element name="u" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="helloResponse">
+<xs:complexType name="getOptionsResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:string" minOccurs="0"/>
 </xs:sequence>
@@ -216,15 +230,15 @@
 <xs:sequence/>
 </xs:complexType>
 
-<xs:complexType name="getOptions">
+<xs:complexType name="hello">
 <xs:sequence>
-<xs:element name="u" type="xs:string" minOccurs="0"/>
+<xs:element name="name" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="getOptionsResponse">
+<xs:complexType name="helloResponse">
 <xs:sequence>
-<xs:element name="return" type="xs:anyType" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
