@@ -530,4 +530,26 @@ private void writeMetaData(ResultSet resultSet) throws SQLException {
         } 
     }
     
+    public String getLeaderboard(){
+         if(!connectionFlag)
+        connectDataBase();
+        try {
+          // Result set get the result of the SQL query
+          resultSet = statement
+              .executeQuery("select uname, wins, losses from tictactoe1.players ORDER BY(wins)");
+            String output = "";
+            String next = "";
+            output = "None";
+            while(resultSet.next()){
+                next = resultSet.getString("uname") + "\t"+ resultSet.getInt("wins" )+" "+ resultSet.getInt("losses");
+                output +="," +next;
+            }
+
+            return output;
+        }
+        catch(Exception e){
+            return "error";
+        }
+    }
+    
 } 
