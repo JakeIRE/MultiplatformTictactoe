@@ -536,12 +536,12 @@ private void writeMetaData(ResultSet resultSet) throws SQLException {
         try {
           // Result set get the result of the SQL query
           resultSet = statement
-              .executeQuery("select uname, wins, losses from tictactoe1.players ORDER BY(wins)");
+              .executeQuery("select uname, wins, losses from tictactoe1.players ORDER BY wins DESC");
             String output = "";
             String next = "";
-            output = "None";
+            output = "Names\tWins\tLosses";
             while(resultSet.next()){
-                next = resultSet.getString("uname") + "\t"+ resultSet.getInt("wins" )+" "+ resultSet.getInt("losses");
+                next = resultSet.getString("uname") + "\t"+ resultSet.getInt("wins" )+"\t"+ resultSet.getInt("losses");
                 output +="," +next;
             }
 

@@ -5,8 +5,7 @@
  */
 package tictactoe;
 
-
-import ConnectSoap.Soap;
+import de.vogella.mysql.first.MySQLAccess;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,11 +17,11 @@ public class MenuThread extends Thread{
     private boolean threadRun = false;
     private String joiner = "";
     private String gameStart = "";
-    private Soap db;
+    private MySQLAccess db;
     private String uname;
     private MainMenu m;
 
-    public MenuThread(String uname, Soap db){
+    public MenuThread(String uname, MySQLAccess db) throws Exception{
         this.db = db;
         this.uname = uname;
         threadRun = true;
@@ -30,7 +29,7 @@ public class MenuThread extends Thread{
     }
 
     public void run(){
-        while(m.active() && threadRun){
+        while(threadRun){
             try {
                 gameStart = db.checkGameStart(uname);
                 if(!gameStart.equals("")){
@@ -38,9 +37,8 @@ public class MenuThread extends Thread{
                     threadRun = false;
                 }
                 joiner = db.getJoiner(uname);
-                if(!joiner.equals("") || m.getBoolDisplay()){
-                    m.setBoolDisplay();
-                    m.displayJoinerOption(joiner);
+                if(!joiner.equals("")){
+                    threadRun = m.displayJoinerOption(joiner);
                 }
                 sleep(100);
             } catch (InterruptedException ex) {

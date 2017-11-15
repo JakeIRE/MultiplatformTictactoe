@@ -5,9 +5,8 @@
  */
 package tictactoe;
 
-
+import de.vogella.mysql.first.MySQLAccess;
 import java.awt.Dimension;
-import ConnectSoap.Soap;
 import java.awt.GridLayout;
 import static java.awt.SystemColor.menu;
 import java.awt.event.ActionEvent;
@@ -32,73 +31,46 @@ public class MainMenu extends JFrame implements ActionListener {
     private javax.swing.JButton quit;
     private javax.swing.JButton invite;
     private javax.swing.JPanel menu;
-    private javax.swing.JLabel menuText;
     private String uname;
-    private Soap db;
+    private MySQLAccess db;
     private String type = "O";
-    private boolean threadRun = true;
-    private boolean inviteBool = false;
     // End of variables declaration    
     
-    public MainMenu(String uname, Soap db){
+    public MainMenu(String uname, MySQLAccess db) throws Exception{
         this.uname = uname;
         this.db = db;
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         db.setOnline(uname);
-        db.resetGame(uname);
-        menu = new javax.swing.JPanel();
-        invite = new javax.swing.JButton();
-        quit = new javax.swing.JButton();
-        menuText = new javax.swing.JLabel();
+        this.setTitle("Main Menu");
+        this.setBounds(100,100,100,300);
+        this.setPreferredSize(new Dimension(800,500));
+        this.setLayout(new GridLayout(1,1));
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        this.addWindowListener(new WindowAdapter() {
+        public void windowClosing(WindowEvent e) {
+            try {
+                db.setOffline(uname);
+            } catch (Exception ex) {
+                Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+      });
 
-        invite.setText("Invite a Player");
+
+        menu = new JPanel();
+        menu.setLayout(new GridLayout(5,2));
+        menu = new JPanel();
+        menu.setLayout(new GridLayout(3,1));
+
+        invite = new JButton("Invite a Player");
         invite.addActionListener(this);
-        
-        quit.setText("Quit");
+        menu.add(invite);
+        quit = new JButton("Quit game");
         quit.addActionListener(this);
-
-        menuText.setText(getStats());
-
-        javax.swing.GroupLayout menuLayout = new javax.swing.GroupLayout(menu);
-        menu.setLayout(menuLayout);
-        menuLayout.setHorizontalGroup(
-            menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(menuLayout.createSequentialGroup()
-                .addGap(160, 160, 160)
-                .addGroup(menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(menuText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(invite, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(quit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(137, Short.MAX_VALUE))
-        );
-        menuLayout.setVerticalGroup(
-            menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(menuLayout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addComponent(menuText)
-                .addGap(45, 45, 45)
-                .addComponent(invite)
-                .addGap(52, 52, 52)
-                .addComponent(quit)
-                .addContainerGap(96, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(menu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(menu, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-
-        pack();
-        setVisible(true);
+        menu.add(quit);
+        this.add(menu);
+        this.pack();
+        this.setVisible(true);
         
     }
 
@@ -108,13 +80,6 @@ public class MainMenu extends JFrame implements ActionListener {
        
         if(source.equals(quit)){
             dispose();
-            threadRun = false;
-            try {
-                db.setOffline(uname);
-            } catch (Exception ex) {
-                Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
         }
         if(source.equals(invite)){
             try {
@@ -138,41 +103,23 @@ public class MainMenu extends JFrame implements ActionListener {
         }
     }
     
-    public void displayJoinerOption(String u) throws Exception{
+    public boolean displayJoinerOption(String u) throws Exception{
         int selection = JOptionPane.showConfirmDialog(null, "Play against "+u+"?", ""+u+"?", JOptionPane.YES_NO_OPTION);
         if(selection == 0){
             db.beginGame(uname, u);
             type = "X";
             nextScreen(u);
-            threadRun = false;
+            return false;
         }
         else {
-            inviteBool = false;
             db.denyGame(uname);
-            threadRun = false;
+            return true;
         }
     }
 
     public void nextScreen(String joiner) throws Exception {
         dispose();
-        db.beginGame(uname, joiner);
         GameThread t = new GameThread(uname, joiner, type, db);
-        t.start();
     }
     
-    public boolean active(){
-        return threadRun;
-    }
-    
-    public String getStats(){
-        return db.getStats(uname);
-    }
-
-    boolean getBoolDisplay() {
-        return inviteBool;
-    }
-    
-    void setBoolDisplay() {
-        inviteBool = true;
-    }
 }
