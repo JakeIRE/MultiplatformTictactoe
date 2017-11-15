@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import ConnectSoap.Soap;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
@@ -28,35 +29,59 @@ public class Welcome extends JFrame implements ActionListener {
     // Variables declaration - do not modify                     
     private javax.swing.JButton register;
     private javax.swing.JButton login;
+    private javax.swing.JButton ip;
     private javax.swing.JPanel menu;
     // End of variables declaration      
     
     public Welcome(){
         
+ menu = new javax.swing.JPanel();
+ 
+        register = new javax.swing.JButton();
+        login = new javax.swing.JButton();
 
-        this.setTitle("Register tictactoe account");
-        this.setBounds(100,100,100,300);
-        this.setPreferredSize(new Dimension(800,500));
-        this.setLayout(new GridLayout(1,1));
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-
-
-        menu = new JPanel();
-        menu.setLayout(new GridLayout(5,2));
-        menu = new JPanel();
-        menu.setLayout(new GridLayout(3,1));
-
-        login = new JButton("Login");
-        login.addActionListener(this);
-        menu.add(login);
-        register = new JButton("Register");
+        register.setText("Regster");
         register.addActionListener(this);
-        menu.add(register);
-        this.add(menu);
-        this.pack();
-        this.setVisible(true);
-        
+
+        login.setText("Login");
+        login.addActionListener(this);
+
+        javax.swing.GroupLayout menuLayout = new javax.swing.GroupLayout(menu);
+        menu.setLayout(menuLayout);
+        menuLayout.setHorizontalGroup(
+            menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(menuLayout.createSequentialGroup()
+                .addGap(157, 157, 157)
+                .addGroup(menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(register, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(login, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(172, Short.MAX_VALUE))
+        );
+        menuLayout.setVerticalGroup(
+            menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(menuLayout.createSequentialGroup()
+                .addGap(88, 88, 88)
+                .addComponent(register)
+                .addGap(62, 62, 62)
+                .addComponent(login)
+                .addContainerGap(104, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(menu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(menu, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        pack();
+        setVisible(true);
     }
 
     @Override
@@ -64,20 +89,12 @@ public class Welcome extends JFrame implements ActionListener {
         JButton source = (JButton) ae.getSource();    
        
         if(source.equals(register)){
-            try {
-                dispose();
-                Register r = new Register();
-            } catch (Exception ex) {
-                Logger.getLogger(Welcome.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            dispose();
+            Register r = new Register();
         }
         if(source.equals(login)){
             dispose();
-            try {
-                Login l = new Login();
-            } catch (Exception ex) {
-                Logger.getLogger(Welcome.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            Login l = new Login();
         }
     }
 }
