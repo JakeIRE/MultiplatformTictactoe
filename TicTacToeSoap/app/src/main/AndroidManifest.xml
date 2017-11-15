@@ -31,8 +31,8 @@
         </activity>
         <activity android:name=".Menu" />
         <activity android:name=".Game" />
-        <activity android:name=".Register" />
-        <activity android:name=".LeaderBoard"></activity>
+        <activity android:name=".LeaderBoard" />
+        <activity android:name=".Invite"></activity>
     </application>
 
 </manifest>

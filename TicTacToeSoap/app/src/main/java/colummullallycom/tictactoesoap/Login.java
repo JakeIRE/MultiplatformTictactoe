@@ -58,8 +58,20 @@ public class Login extends AppCompatActivity {
         rBtn.setOnClickListener(new OnClickListener(){
             @Override
             public void onClick(View v){
-                    Intent myIntent=new Intent(Login.this,Register.class);
-                    startActivity(myIntent);
+                uName = uNameIn.getText().toString();
+                password=passwordIn.getText().toString();
+                //TODO
+                //checks and stuff
+                Soap db =new Soap();
+                String output = null;
+                output = db.register(uName, password);
+                t.setText(output);
+                if(output.equals("")){
+                    Intent myIntent=new Intent(Login.this,Menu.class);
+                    Bundle bundle= new Bundle();
+                    bundle.putString("Code",uName);
+                    myIntent.putExtras(bundle);
+                    startActivity(myIntent);}
             }
         });
     }
