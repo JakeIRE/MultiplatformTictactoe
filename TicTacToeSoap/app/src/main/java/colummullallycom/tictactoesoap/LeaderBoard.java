@@ -16,5 +16,8 @@ public class LeaderBoard extends AppCompatActivity {
         Bundle b = iin.getExtras();
         uName = (String) b.get("Code");
         leaderboard=(ListView)findViewById(R.id.Leaderboard);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, android.R.id.text1, values);
+        invitels.setAdapter(adapter);
     }
 }

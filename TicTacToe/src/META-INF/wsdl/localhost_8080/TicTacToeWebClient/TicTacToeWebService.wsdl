@@ -13,11 +13,20 @@
 <message name="connect">
 <part name="parameters" element="tns:connect"/>
 </message>
+<message name="getStats">
+<part name="parameters" element="tns:getStats"/>
+</message>
+<message name="getStatsResponse">
+<part name="parameters" element="tns:getStatsResponse"/>
+</message>
 <message name="getOptions">
 <part name="parameters" element="tns:getOptions"/>
 </message>
 <message name="getOptionsResponse">
 <part name="parameters" element="tns:getOptionsResponse"/>
+</message>
+<message name="setOffline">
+<part name="parameters" element="tns:setOffline"/>
 </message>
 <message name="beginGame">
 <part name="parameters" element="tns:beginGame"/>
@@ -25,29 +34,11 @@
 <message name="beginGameResponse">
 <part name="parameters" element="tns:beginGameResponse"/>
 </message>
-<message name="resetGame">
-<part name="parameters" element="tns:resetGame"/>
+<message name="denyGame">
+<part name="parameters" element="tns:denyGame"/>
 </message>
-<message name="resetGameResponse">
-<part name="parameters" element="tns:resetGameResponse"/>
-</message>
-<message name="setOffline">
-<part name="parameters" element="tns:setOffline"/>
-</message>
-<message name="hello">
-<part name="parameters" element="tns:hello"/>
-</message>
-<message name="helloResponse">
-<part name="parameters" element="tns:helloResponse"/>
-</message>
-<message name="getTurn">
-<part name="parameters" element="tns:getTurn"/>
-</message>
-<message name="getTurnResponse">
-<part name="parameters" element="tns:getTurnResponse"/>
-</message>
-<message name="setOnline">
-<part name="parameters" element="tns:setOnline"/>
+<message name="denyGameResponse">
+<part name="parameters" element="tns:denyGameResponse"/>
 </message>
 <message name="checkGameStart">
 <part name="parameters" element="tns:checkGameStart"/>
@@ -61,35 +52,11 @@
 <message name="inviteResponse">
 <part name="parameters" element="tns:inviteResponse"/>
 </message>
-<message name="loginVerify">
-<part name="parameters" element="tns:loginVerify"/>
+<message name="getTurn">
+<part name="parameters" element="tns:getTurn"/>
 </message>
-<message name="loginVerifyResponse">
-<part name="parameters" element="tns:loginVerifyResponse"/>
-</message>
-<message name="getJoiner">
-<part name="parameters" element="tns:getJoiner"/>
-</message>
-<message name="getJoinerResponse">
-<part name="parameters" element="tns:getJoinerResponse"/>
-</message>
-<message name="setDraw">
-<part name="parameters" element="tns:setDraw"/>
-</message>
-<message name="setDrawResponse">
-<part name="parameters" element="tns:setDrawResponse"/>
-</message>
-<message name="setWin">
-<part name="parameters" element="tns:setWin"/>
-</message>
-<message name="setWinResponse">
-<part name="parameters" element="tns:setWinResponse"/>
-</message>
-<message name="denyGame">
-<part name="parameters" element="tns:denyGame"/>
-</message>
-<message name="denyGameResponse">
-<part name="parameters" element="tns:denyGameResponse"/>
+<message name="getTurnResponse">
+<part name="parameters" element="tns:getTurnResponse"/>
 </message>
 <message name="setMove">
 <part name="parameters" element="tns:setMove"/>
@@ -97,11 +64,17 @@
 <message name="setMoveResponse">
 <part name="parameters" element="tns:setMoveResponse"/>
 </message>
-<message name="getLeaderboard">
-<part name="parameters" element="tns:getLeaderboard"/>
+<message name="resetGame">
+<part name="parameters" element="tns:resetGame"/>
 </message>
-<message name="getLeaderboardResponse">
-<part name="parameters" element="tns:getLeaderboardResponse"/>
+<message name="resetGameResponse">
+<part name="parameters" element="tns:resetGameResponse"/>
+</message>
+<message name="setDraw">
+<part name="parameters" element="tns:setDraw"/>
+</message>
+<message name="setDrawResponse">
+<part name="parameters" element="tns:setDrawResponse"/>
 </message>
 <message name="setLoss">
 <part name="parameters" element="tns:setLoss"/>
@@ -109,11 +82,38 @@
 <message name="setLossResponse">
 <part name="parameters" element="tns:setLossResponse"/>
 </message>
-<message name="getStats">
-<part name="parameters" element="tns:getStats"/>
+<message name="getLeaderboard">
+<part name="parameters" element="tns:getLeaderboard"/>
 </message>
-<message name="getStatsResponse">
-<part name="parameters" element="tns:getStatsResponse"/>
+<message name="getLeaderboardResponse">
+<part name="parameters" element="tns:getLeaderboardResponse"/>
+</message>
+<message name="getJoiner">
+<part name="parameters" element="tns:getJoiner"/>
+</message>
+<message name="getJoinerResponse">
+<part name="parameters" element="tns:getJoinerResponse"/>
+</message>
+<message name="setOnline">
+<part name="parameters" element="tns:setOnline"/>
+</message>
+<message name="hello">
+<part name="parameters" element="tns:hello"/>
+</message>
+<message name="helloResponse">
+<part name="parameters" element="tns:helloResponse"/>
+</message>
+<message name="setWin">
+<part name="parameters" element="tns:setWin"/>
+</message>
+<message name="setWinResponse">
+<part name="parameters" element="tns:setWinResponse"/>
+</message>
+<message name="loginVerify">
+<part name="parameters" element="tns:loginVerify"/>
+</message>
+<message name="loginVerifyResponse">
+<part name="parameters" element="tns:loginVerifyResponse"/>
 </message>
 <portType name="TicTacToeWebService">
 <operation name="register">
@@ -123,31 +123,24 @@
 <operation name="connect">
 <input wsam:Action="http://tttWebData/TicTacToeWebService/connect" message="tns:connect"/>
 </operation>
+<operation name="getStats">
+<input wsam:Action="http://tttWebData/TicTacToeWebService/getStatsRequest" message="tns:getStats"/>
+<output wsam:Action="http://tttWebData/TicTacToeWebService/getStatsResponse" message="tns:getStatsResponse"/>
+</operation>
 <operation name="getOptions">
 <input wsam:Action="http://tttWebData/TicTacToeWebService/getOptionsRequest" message="tns:getOptions"/>
 <output wsam:Action="http://tttWebData/TicTacToeWebService/getOptionsResponse" message="tns:getOptionsResponse"/>
+</operation>
+<operation name="setOffline">
+<input wsam:Action="http://tttWebData/TicTacToeWebService/setOffline" message="tns:setOffline"/>
 </operation>
 <operation name="beginGame">
 <input wsam:Action="http://tttWebData/TicTacToeWebService/beginGameRequest" message="tns:beginGame"/>
 <output wsam:Action="http://tttWebData/TicTacToeWebService/beginGameResponse" message="tns:beginGameResponse"/>
 </operation>
-<operation name="resetGame">
-<input wsam:Action="http://tttWebData/TicTacToeWebService/resetGameRequest" message="tns:resetGame"/>
-<output wsam:Action="http://tttWebData/TicTacToeWebService/resetGameResponse" message="tns:resetGameResponse"/>
-</operation>
-<operation name="setOffline">
-<input wsam:Action="http://tttWebData/TicTacToeWebService/setOffline" message="tns:setOffline"/>
-</operation>
-<operation name="hello">
-<input wsam:Action="http://tttWebData/TicTacToeWebService/helloRequest" message="tns:hello"/>
-<output wsam:Action="http://tttWebData/TicTacToeWebService/helloResponse" message="tns:helloResponse"/>
-</operation>
-<operation name="getTurn">
-<input wsam:Action="http://tttWebData/TicTacToeWebService/getTurnRequest" message="tns:getTurn"/>
-<output wsam:Action="http://tttWebData/TicTacToeWebService/getTurnResponse" message="tns:getTurnResponse"/>
-</operation>
-<operation name="setOnline">
-<input wsam:Action="http://tttWebData/TicTacToeWebService/setOnline" message="tns:setOnline"/>
+<operation name="denyGame">
+<input wsam:Action="http://tttWebData/TicTacToeWebService/denyGameRequest" message="tns:denyGame"/>
+<output wsam:Action="http://tttWebData/TicTacToeWebService/denyGameResponse" message="tns:denyGameResponse"/>
 </operation>
 <operation name="checkGameStart">
 <input wsam:Action="http://tttWebData/TicTacToeWebService/checkGameStartRequest" message="tns:checkGameStart"/>
@@ -157,41 +150,48 @@
 <input wsam:Action="http://tttWebData/TicTacToeWebService/inviteRequest" message="tns:invite"/>
 <output wsam:Action="http://tttWebData/TicTacToeWebService/inviteResponse" message="tns:inviteResponse"/>
 </operation>
-<operation name="loginVerify">
-<input wsam:Action="http://tttWebData/TicTacToeWebService/loginVerifyRequest" message="tns:loginVerify"/>
-<output wsam:Action="http://tttWebData/TicTacToeWebService/loginVerifyResponse" message="tns:loginVerifyResponse"/>
-</operation>
-<operation name="getJoiner">
-<input wsam:Action="http://tttWebData/TicTacToeWebService/getJoinerRequest" message="tns:getJoiner"/>
-<output wsam:Action="http://tttWebData/TicTacToeWebService/getJoinerResponse" message="tns:getJoinerResponse"/>
-</operation>
-<operation name="setDraw">
-<input wsam:Action="http://tttWebData/TicTacToeWebService/setDrawRequest" message="tns:setDraw"/>
-<output wsam:Action="http://tttWebData/TicTacToeWebService/setDrawResponse" message="tns:setDrawResponse"/>
-</operation>
-<operation name="setWin">
-<input wsam:Action="http://tttWebData/TicTacToeWebService/setWinRequest" message="tns:setWin"/>
-<output wsam:Action="http://tttWebData/TicTacToeWebService/setWinResponse" message="tns:setWinResponse"/>
-</operation>
-<operation name="denyGame">
-<input wsam:Action="http://tttWebData/TicTacToeWebService/denyGameRequest" message="tns:denyGame"/>
-<output wsam:Action="http://tttWebData/TicTacToeWebService/denyGameResponse" message="tns:denyGameResponse"/>
+<operation name="getTurn">
+<input wsam:Action="http://tttWebData/TicTacToeWebService/getTurnRequest" message="tns:getTurn"/>
+<output wsam:Action="http://tttWebData/TicTacToeWebService/getTurnResponse" message="tns:getTurnResponse"/>
 </operation>
 <operation name="setMove">
 <input wsam:Action="http://tttWebData/TicTacToeWebService/setMoveRequest" message="tns:setMove"/>
 <output wsam:Action="http://tttWebData/TicTacToeWebService/setMoveResponse" message="tns:setMoveResponse"/>
 </operation>
-<operation name="getLeaderboard">
-<input wsam:Action="http://tttWebData/TicTacToeWebService/getLeaderboardRequest" message="tns:getLeaderboard"/>
-<output wsam:Action="http://tttWebData/TicTacToeWebService/getLeaderboardResponse" message="tns:getLeaderboardResponse"/>
+<operation name="resetGame">
+<input wsam:Action="http://tttWebData/TicTacToeWebService/resetGameRequest" message="tns:resetGame"/>
+<output wsam:Action="http://tttWebData/TicTacToeWebService/resetGameResponse" message="tns:resetGameResponse"/>
+</operation>
+<operation name="setDraw">
+<input wsam:Action="http://tttWebData/TicTacToeWebService/setDrawRequest" message="tns:setDraw"/>
+<output wsam:Action="http://tttWebData/TicTacToeWebService/setDrawResponse" message="tns:setDrawResponse"/>
 </operation>
 <operation name="setLoss">
 <input wsam:Action="http://tttWebData/TicTacToeWebService/setLossRequest" message="tns:setLoss"/>
 <output wsam:Action="http://tttWebData/TicTacToeWebService/setLossResponse" message="tns:setLossResponse"/>
 </operation>
-<operation name="getStats">
-<input wsam:Action="http://tttWebData/TicTacToeWebService/getStatsRequest" message="tns:getStats"/>
-<output wsam:Action="http://tttWebData/TicTacToeWebService/getStatsResponse" message="tns:getStatsResponse"/>
+<operation name="getLeaderboard">
+<input wsam:Action="http://tttWebData/TicTacToeWebService/getLeaderboardRequest" message="tns:getLeaderboard"/>
+<output wsam:Action="http://tttWebData/TicTacToeWebService/getLeaderboardResponse" message="tns:getLeaderboardResponse"/>
+</operation>
+<operation name="getJoiner">
+<input wsam:Action="http://tttWebData/TicTacToeWebService/getJoinerRequest" message="tns:getJoiner"/>
+<output wsam:Action="http://tttWebData/TicTacToeWebService/getJoinerResponse" message="tns:getJoinerResponse"/>
+</operation>
+<operation name="setOnline">
+<input wsam:Action="http://tttWebData/TicTacToeWebService/setOnline" message="tns:setOnline"/>
+</operation>
+<operation name="hello">
+<input wsam:Action="http://tttWebData/TicTacToeWebService/helloRequest" message="tns:hello"/>
+<output wsam:Action="http://tttWebData/TicTacToeWebService/helloResponse" message="tns:helloResponse"/>
+</operation>
+<operation name="setWin">
+<input wsam:Action="http://tttWebData/TicTacToeWebService/setWinRequest" message="tns:setWin"/>
+<output wsam:Action="http://tttWebData/TicTacToeWebService/setWinResponse" message="tns:setWinResponse"/>
+</operation>
+<operation name="loginVerify">
+<input wsam:Action="http://tttWebData/TicTacToeWebService/loginVerifyRequest" message="tns:loginVerify"/>
+<output wsam:Action="http://tttWebData/TicTacToeWebService/loginVerifyResponse" message="tns:loginVerifyResponse"/>
 </operation>
 </portType>
 <binding name="TicTacToeWebServicePortBinding" type="tns:TicTacToeWebService">
@@ -211,25 +211,16 @@
 <soap:body use="literal"/>
 </input>
 </operation>
+<operation name="getStats">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
 <operation name="getOptions">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="beginGame">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="resetGame">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -244,7 +235,7 @@
 <soap:body use="literal"/>
 </input>
 </operation>
-<operation name="hello">
+<operation name="beginGame">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -253,7 +244,7 @@
 <soap:body use="literal"/>
 </output>
 </operation>
-<operation name="getTurn">
+<operation name="denyGame">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -261,12 +252,6 @@
 <output>
 <soap:body use="literal"/>
 </output>
-</operation>
-<operation name="setOnline">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
 </operation>
 <operation name="checkGameStart">
 <soap:operation soapAction=""/>
@@ -286,43 +271,7 @@
 <soap:body use="literal"/>
 </output>
 </operation>
-<operation name="loginVerify">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="getJoiner">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="setDraw">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="setWin">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="denyGame">
+<operation name="getTurn">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -340,7 +289,16 @@
 <soap:body use="literal"/>
 </output>
 </operation>
-<operation name="getLeaderboard">
+<operation name="resetGame">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="setDraw">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -358,7 +316,49 @@
 <soap:body use="literal"/>
 </output>
 </operation>
-<operation name="getStats">
+<operation name="getLeaderboard">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="getJoiner">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="setOnline">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+</operation>
+<operation name="hello">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="setWin">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="loginVerify">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>

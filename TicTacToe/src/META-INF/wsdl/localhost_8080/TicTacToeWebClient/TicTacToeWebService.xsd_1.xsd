@@ -86,12 +86,6 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="setOnline">
-<xs:sequence>
-<xs:element name="u" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
 <xs:complexType name="getLeaderboard">
 <xs:sequence/>
 </xs:complexType>
@@ -99,6 +93,12 @@
 <xs:complexType name="getLeaderboardResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="setOnline">
+<xs:sequence>
+<xs:element name="u" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -209,6 +209,17 @@
 </xs:sequence>
 </xs:complexType>
 
+<xs:complexType name="invite">
+<xs:sequence>
+<xs:element name="uname" type="xs:string" minOccurs="0"/>
+<xs:element name="invite" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="inviteResponse">
+<xs:sequence/>
+</xs:complexType>
+
 <xs:complexType name="resetGame">
 <xs:sequence>
 <xs:element name="uname" type="xs:string" minOccurs="0"/>
@@ -229,17 +240,6 @@
 <xs:sequence>
 <xs:element name="return" type="xs:string" minOccurs="0"/>
 </xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="invite">
-<xs:sequence>
-<xs:element name="uname" type="xs:string" minOccurs="0"/>
-<xs:element name="invite" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="inviteResponse">
-<xs:sequence/>
 </xs:complexType>
 
 <xs:complexType name="beginGame">
