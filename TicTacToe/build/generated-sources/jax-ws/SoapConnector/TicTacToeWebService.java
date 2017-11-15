@@ -1,7 +1,6 @@
 
 package SoapConnector;
 
-import java.util.List;
 import javax.jws.Oneway;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -55,6 +54,60 @@ public interface TicTacToeWebService {
 
     /**
      * 
+     * @param u
+     * @return
+     *     returns java.lang.String
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "getOptions", targetNamespace = "http://tttWebData/", className = "SoapConnector.GetOptions")
+    @ResponseWrapper(localName = "getOptionsResponse", targetNamespace = "http://tttWebData/", className = "SoapConnector.GetOptionsResponse")
+    @Action(input = "http://tttWebData/TicTacToeWebService/getOptionsRequest", output = "http://tttWebData/TicTacToeWebService/getOptionsResponse")
+    public String getOptions(
+        @WebParam(name = "u", targetNamespace = "")
+        String u);
+
+    /**
+     * 
+     * @param u
+     * @param joiner
+     */
+    @WebMethod
+    @RequestWrapper(localName = "beginGame", targetNamespace = "http://tttWebData/", className = "SoapConnector.BeginGame")
+    @ResponseWrapper(localName = "beginGameResponse", targetNamespace = "http://tttWebData/", className = "SoapConnector.BeginGameResponse")
+    @Action(input = "http://tttWebData/TicTacToeWebService/beginGameRequest", output = "http://tttWebData/TicTacToeWebService/beginGameResponse")
+    public void beginGame(
+        @WebParam(name = "u", targetNamespace = "")
+        String u,
+        @WebParam(name = "joiner", targetNamespace = "")
+        String joiner);
+
+    /**
+     * 
+     * @param uname
+     */
+    @WebMethod
+    @RequestWrapper(localName = "resetGame", targetNamespace = "http://tttWebData/", className = "SoapConnector.ResetGame")
+    @ResponseWrapper(localName = "resetGameResponse", targetNamespace = "http://tttWebData/", className = "SoapConnector.ResetGameResponse")
+    @Action(input = "http://tttWebData/TicTacToeWebService/resetGameRequest", output = "http://tttWebData/TicTacToeWebService/resetGameResponse")
+    public void resetGame(
+        @WebParam(name = "uname", targetNamespace = "")
+        String uname);
+
+    /**
+     * 
+     * @param u
+     */
+    @WebMethod
+    @Oneway
+    @RequestWrapper(localName = "setOffline", targetNamespace = "http://tttWebData/", className = "SoapConnector.SetOffline")
+    @Action(input = "http://tttWebData/TicTacToeWebService/setOffline")
+    public void setOffline(
+        @WebParam(name = "u", targetNamespace = "")
+        String u);
+
+    /**
+     * 
      * @param name
      * @return
      *     returns java.lang.String
@@ -70,21 +123,18 @@ public interface TicTacToeWebService {
 
     /**
      * 
-     * @param uname
-     * @param pass
+     * @param joiner
      * @return
      *     returns java.lang.String
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "loginVerify", targetNamespace = "http://tttWebData/", className = "SoapConnector.LoginVerify")
-    @ResponseWrapper(localName = "loginVerifyResponse", targetNamespace = "http://tttWebData/", className = "SoapConnector.LoginVerifyResponse")
-    @Action(input = "http://tttWebData/TicTacToeWebService/loginVerifyRequest", output = "http://tttWebData/TicTacToeWebService/loginVerifyResponse")
-    public String loginVerify(
-        @WebParam(name = "uname", targetNamespace = "")
-        String uname,
-        @WebParam(name = "pass", targetNamespace = "")
-        String pass);
+    @RequestWrapper(localName = "getTurn", targetNamespace = "http://tttWebData/", className = "SoapConnector.GetTurn")
+    @ResponseWrapper(localName = "getTurnResponse", targetNamespace = "http://tttWebData/", className = "SoapConnector.GetTurnResponse")
+    @Action(input = "http://tttWebData/TicTacToeWebService/getTurnRequest", output = "http://tttWebData/TicTacToeWebService/getTurnResponse")
+    public String getTurn(
+        @WebParam(name = "joiner", targetNamespace = "")
+        String joiner);
 
     /**
      * 
@@ -97,18 +147,6 @@ public interface TicTacToeWebService {
     public void setOnline(
         @WebParam(name = "u", targetNamespace = "")
         String u);
-
-    /**
-     * 
-     * @param uname
-     */
-    @WebMethod
-    @RequestWrapper(localName = "setLoss", targetNamespace = "http://tttWebData/", className = "SoapConnector.SetLoss")
-    @ResponseWrapper(localName = "setLossResponse", targetNamespace = "http://tttWebData/", className = "SoapConnector.SetLossResponse")
-    @Action(input = "http://tttWebData/TicTacToeWebService/setLossRequest", output = "http://tttWebData/TicTacToeWebService/setLossResponse")
-    public void setLoss(
-        @WebParam(name = "uname", targetNamespace = "")
-        String uname);
 
     /**
      * 
@@ -127,18 +165,36 @@ public interface TicTacToeWebService {
 
     /**
      * 
-     * @param move
      * @param uname
+     * @param invite
      */
     @WebMethod
-    @RequestWrapper(localName = "setMove", targetNamespace = "http://tttWebData/", className = "SoapConnector.SetMove")
-    @ResponseWrapper(localName = "setMoveResponse", targetNamespace = "http://tttWebData/", className = "SoapConnector.SetMoveResponse")
-    @Action(input = "http://tttWebData/TicTacToeWebService/setMoveRequest", output = "http://tttWebData/TicTacToeWebService/setMoveResponse")
-    public void setMove(
-        @WebParam(name = "move", targetNamespace = "")
-        String move,
+    @RequestWrapper(localName = "invite", targetNamespace = "http://tttWebData/", className = "SoapConnector.Invite")
+    @ResponseWrapper(localName = "inviteResponse", targetNamespace = "http://tttWebData/", className = "SoapConnector.InviteResponse")
+    @Action(input = "http://tttWebData/TicTacToeWebService/inviteRequest", output = "http://tttWebData/TicTacToeWebService/inviteResponse")
+    public void invite(
         @WebParam(name = "uname", targetNamespace = "")
-        String uname);
+        String uname,
+        @WebParam(name = "invite", targetNamespace = "")
+        String invite);
+
+    /**
+     * 
+     * @param uname
+     * @param pass
+     * @return
+     *     returns java.lang.String
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "loginVerify", targetNamespace = "http://tttWebData/", className = "SoapConnector.LoginVerify")
+    @ResponseWrapper(localName = "loginVerifyResponse", targetNamespace = "http://tttWebData/", className = "SoapConnector.LoginVerifyResponse")
+    @Action(input = "http://tttWebData/TicTacToeWebService/loginVerifyRequest", output = "http://tttWebData/TicTacToeWebService/loginVerifyResponse")
+    public String loginVerify(
+        @WebParam(name = "uname", targetNamespace = "")
+        String uname,
+        @WebParam(name = "pass", targetNamespace = "")
+        String pass);
 
     /**
      * 
@@ -169,15 +225,15 @@ public interface TicTacToeWebService {
 
     /**
      * 
-     * @param u
+     * @param uname
      */
     @WebMethod
-    @Oneway
-    @RequestWrapper(localName = "setOffline", targetNamespace = "http://tttWebData/", className = "SoapConnector.SetOffline")
-    @Action(input = "http://tttWebData/TicTacToeWebService/setOffline")
-    public void setOffline(
-        @WebParam(name = "u", targetNamespace = "")
-        String u);
+    @RequestWrapper(localName = "setWin", targetNamespace = "http://tttWebData/", className = "SoapConnector.SetWin")
+    @ResponseWrapper(localName = "setWinResponse", targetNamespace = "http://tttWebData/", className = "SoapConnector.SetWinResponse")
+    @Action(input = "http://tttWebData/TicTacToeWebService/setWinRequest", output = "http://tttWebData/TicTacToeWebService/setWinResponse")
+    public void setWin(
+        @WebParam(name = "uname", targetNamespace = "")
+        String uname);
 
     /**
      * 
@@ -193,87 +249,42 @@ public interface TicTacToeWebService {
 
     /**
      * 
-     * @param u
-     * @param joiner
-     */
-    @WebMethod
-    @RequestWrapper(localName = "beginGame", targetNamespace = "http://tttWebData/", className = "SoapConnector.BeginGame")
-    @ResponseWrapper(localName = "beginGameResponse", targetNamespace = "http://tttWebData/", className = "SoapConnector.BeginGameResponse")
-    @Action(input = "http://tttWebData/TicTacToeWebService/beginGameRequest", output = "http://tttWebData/TicTacToeWebService/beginGameResponse")
-    public void beginGame(
-        @WebParam(name = "u", targetNamespace = "")
-        String u,
-        @WebParam(name = "joiner", targetNamespace = "")
-        String joiner);
-
-    /**
-     * 
+     * @param move
      * @param uname
      */
     @WebMethod
-    @RequestWrapper(localName = "setWin", targetNamespace = "http://tttWebData/", className = "SoapConnector.SetWin")
-    @ResponseWrapper(localName = "setWinResponse", targetNamespace = "http://tttWebData/", className = "SoapConnector.SetWinResponse")
-    @Action(input = "http://tttWebData/TicTacToeWebService/setWinRequest", output = "http://tttWebData/TicTacToeWebService/setWinResponse")
-    public void setWin(
+    @RequestWrapper(localName = "setMove", targetNamespace = "http://tttWebData/", className = "SoapConnector.SetMove")
+    @ResponseWrapper(localName = "setMoveResponse", targetNamespace = "http://tttWebData/", className = "SoapConnector.SetMoveResponse")
+    @Action(input = "http://tttWebData/TicTacToeWebService/setMoveRequest", output = "http://tttWebData/TicTacToeWebService/setMoveResponse")
+    public void setMove(
+        @WebParam(name = "move", targetNamespace = "")
+        String move,
         @WebParam(name = "uname", targetNamespace = "")
         String uname);
 
     /**
      * 
-     * @param uname
-     * @param invite
-     */
-    @WebMethod
-    @RequestWrapper(localName = "invite", targetNamespace = "http://tttWebData/", className = "SoapConnector.Invite")
-    @ResponseWrapper(localName = "inviteResponse", targetNamespace = "http://tttWebData/", className = "SoapConnector.InviteResponse")
-    @Action(input = "http://tttWebData/TicTacToeWebService/inviteRequest", output = "http://tttWebData/TicTacToeWebService/inviteResponse")
-    public void invite(
-        @WebParam(name = "uname", targetNamespace = "")
-        String uname,
-        @WebParam(name = "invite", targetNamespace = "")
-        String invite);
-
-    /**
-     * 
-     * @param joiner
      * @return
      *     returns java.lang.String
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "getTurn", targetNamespace = "http://tttWebData/", className = "SoapConnector.GetTurn")
-    @ResponseWrapper(localName = "getTurnResponse", targetNamespace = "http://tttWebData/", className = "SoapConnector.GetTurnResponse")
-    @Action(input = "http://tttWebData/TicTacToeWebService/getTurnRequest", output = "http://tttWebData/TicTacToeWebService/getTurnResponse")
-    public String getTurn(
-        @WebParam(name = "joiner", targetNamespace = "")
-        String joiner);
+    @RequestWrapper(localName = "getLeaderboard", targetNamespace = "http://tttWebData/", className = "SoapConnector.GetLeaderboard")
+    @ResponseWrapper(localName = "getLeaderboardResponse", targetNamespace = "http://tttWebData/", className = "SoapConnector.GetLeaderboardResponse")
+    @Action(input = "http://tttWebData/TicTacToeWebService/getLeaderboardRequest", output = "http://tttWebData/TicTacToeWebService/getLeaderboardResponse")
+    public String getLeaderboard();
 
     /**
      * 
      * @param uname
      */
     @WebMethod
-    @RequestWrapper(localName = "resetGame", targetNamespace = "http://tttWebData/", className = "SoapConnector.ResetGame")
-    @ResponseWrapper(localName = "resetGameResponse", targetNamespace = "http://tttWebData/", className = "SoapConnector.ResetGameResponse")
-    @Action(input = "http://tttWebData/TicTacToeWebService/resetGameRequest", output = "http://tttWebData/TicTacToeWebService/resetGameResponse")
-    public void resetGame(
+    @RequestWrapper(localName = "setLoss", targetNamespace = "http://tttWebData/", className = "SoapConnector.SetLoss")
+    @ResponseWrapper(localName = "setLossResponse", targetNamespace = "http://tttWebData/", className = "SoapConnector.SetLossResponse")
+    @Action(input = "http://tttWebData/TicTacToeWebService/setLossRequest", output = "http://tttWebData/TicTacToeWebService/setLossResponse")
+    public void setLoss(
         @WebParam(name = "uname", targetNamespace = "")
         String uname);
-
-    /**
-     * 
-     * @param u
-     * @return
-     *     returns java.util.List<java.lang.Object>
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "getOptions", targetNamespace = "http://tttWebData/", className = "SoapConnector.GetOptions")
-    @ResponseWrapper(localName = "getOptionsResponse", targetNamespace = "http://tttWebData/", className = "SoapConnector.GetOptionsResponse")
-    @Action(input = "http://tttWebData/TicTacToeWebService/getOptionsRequest", output = "http://tttWebData/TicTacToeWebService/getOptionsResponse")
-    public List<Object> getOptions(
-        @WebParam(name = "u", targetNamespace = "")
-        String u);
 
     /**
      * 

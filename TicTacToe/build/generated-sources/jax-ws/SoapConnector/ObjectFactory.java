@@ -40,6 +40,7 @@ public class ObjectFactory {
     private final static QName _RegisterResponse_QNAME = new QName("http://tttWebData/", "registerResponse");
     private final static QName _LoginVerify_QNAME = new QName("http://tttWebData/", "loginVerify");
     private final static QName _SetLoss_QNAME = new QName("http://tttWebData/", "setLoss");
+    private final static QName _GetLeaderboard_QNAME = new QName("http://tttWebData/", "getLeaderboard");
     private final static QName _SetOnline_QNAME = new QName("http://tttWebData/", "setOnline");
     private final static QName _SetLossResponse_QNAME = new QName("http://tttWebData/", "setLossResponse");
     private final static QName _InviteResponse_QNAME = new QName("http://tttWebData/", "inviteResponse");
@@ -52,6 +53,7 @@ public class ObjectFactory {
     private final static QName _SetOffline_QNAME = new QName("http://tttWebData/", "setOffline");
     private final static QName _DenyGame_QNAME = new QName("http://tttWebData/", "denyGame");
     private final static QName _GetJoiner_QNAME = new QName("http://tttWebData/", "getJoiner");
+    private final static QName _GetLeaderboardResponse_QNAME = new QName("http://tttWebData/", "getLeaderboardResponse");
     private final static QName _SetDrawResponse_QNAME = new QName("http://tttWebData/", "setDrawResponse");
     private final static QName _GetJoinerResponse_QNAME = new QName("http://tttWebData/", "getJoinerResponse");
     private final static QName _SetDraw_QNAME = new QName("http://tttWebData/", "setDraw");
@@ -105,6 +107,14 @@ public class ObjectFactory {
      */
     public GetJoiner createGetJoiner() {
         return new GetJoiner();
+    }
+
+    /**
+     * Create an instance of {@link GetLeaderboardResponse }
+     * 
+     */
+    public GetLeaderboardResponse createGetLeaderboardResponse() {
+        return new GetLeaderboardResponse();
     }
 
     /**
@@ -185,6 +195,14 @@ public class ObjectFactory {
      */
     public SetMove createSetMove() {
         return new SetMove();
+    }
+
+    /**
+     * Create an instance of {@link GetLeaderboard }
+     * 
+     */
+    public GetLeaderboard createGetLeaderboard() {
+        return new GetLeaderboard();
     }
 
     /**
@@ -492,6 +510,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetLeaderboard }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://tttWebData/", name = "getLeaderboard")
+    public JAXBElement<GetLeaderboard> createGetLeaderboard(GetLeaderboard value) {
+        return new JAXBElement<GetLeaderboard>(_GetLeaderboard_QNAME, GetLeaderboard.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link SetOnline }{@code >}}
      * 
      */
@@ -597,6 +624,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://tttWebData/", name = "getJoiner")
     public JAXBElement<GetJoiner> createGetJoiner(GetJoiner value) {
         return new JAXBElement<GetJoiner>(_GetJoiner_QNAME, GetJoiner.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetLeaderboardResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://tttWebData/", name = "getLeaderboardResponse")
+    public JAXBElement<GetLeaderboardResponse> createGetLeaderboardResponse(GetLeaderboardResponse value) {
+        return new JAXBElement<GetLeaderboardResponse>(_GetLeaderboardResponse_QNAME, GetLeaderboardResponse.class, null, value);
     }
 
     /**

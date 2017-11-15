@@ -16,7 +16,11 @@ public class Soap {
     public Soap(){
         web = new TicTacToeWebService_Service();
         port = web.getTicTacToeWebServicePort();
-   } 
+   }
+    
+    public void beginGame(){
+        
+    }
     
     public String register(String uname, String pass){
         return port.register(uname, pass);
@@ -84,5 +88,9 @@ public class Soap {
 
     public String getStats(String uname) {
         return port.getStats(uname);
+    }
+    
+    public String[] getLeaderboard(){
+        return port.getLeaderboard().split(",");
     }
 }

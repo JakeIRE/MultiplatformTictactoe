@@ -33,22 +33,5 @@
         <delete dir="${build.generated.dir}/jax-wsCache/TicTacToeWebService"/>
         <delete dir="${build.generated.sources.dir}/jax-ws/SoapConnector"/>
     </target>
-    <target name="wsimport-client-WsClient" depends="wsimport-init">
-        <mkdir dir="${build.generated.dir}/jax-wsCache/WsClient"/>
-        <property name="wsdl-WsClient" location="xml-resources/web-service-references/WsClient/wsdl/localhost_8080/TicTacToeWebClient/index"/>
-        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/WsClient" destdir="${build.generated.dir}/jax-wsCache/WsClient" wsdl="${wsdl-WsClient}" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://localhost:8080/TicTacToeWebClient/" xnocompile="true" xendorsed="true">
-            <depends file="${wsdl-WsClient}"/>
-            <produces dir="${build.generated.dir}/jax-wsCache/WsClient"/>
-        </wsimport>
-        <copy todir="${build.generated.sources.dir}/jax-ws">
-            <fileset dir="${build.generated.dir}/jax-wsCache/WsClient">
-                <include name="**/*.java"/>
-            </fileset>
-        </copy>
-    </target>
-    <target name="wsimport-client-clean-WsClient" depends="-init-project">
-        <delete dir="${build.generated.dir}/jax-wsCache/WsClient"/>
-        <delete dir="${build.generated.sources.dir}/jax-ws/"/>
-    </target>
-    <target name="wsimport-client-generate" depends="wsimport-client-TicTacToeWebService, wsimport-client-WsClient"/>
+    <target name="wsimport-client-generate" depends="wsimport-client-TicTacToeWebService"/>
 </project>

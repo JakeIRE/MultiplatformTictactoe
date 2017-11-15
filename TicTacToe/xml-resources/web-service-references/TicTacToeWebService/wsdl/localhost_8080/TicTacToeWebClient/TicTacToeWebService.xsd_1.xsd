@@ -18,6 +18,10 @@
 
 <xs:element name="getJoinerResponse" type="tns:getJoinerResponse"/>
 
+<xs:element name="getLeaderboard" type="tns:getLeaderboard"/>
+
+<xs:element name="getLeaderboardResponse" type="tns:getLeaderboardResponse"/>
+
 <xs:element name="getOptions" type="tns:getOptions"/>
 
 <xs:element name="getOptionsResponse" type="tns:getOptionsResponse"/>
@@ -85,6 +89,16 @@
 <xs:complexType name="setOnline">
 <xs:sequence>
 <xs:element name="u" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getLeaderboard">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="getLeaderboardResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -183,6 +197,28 @@
 <xs:sequence/>
 </xs:complexType>
 
+<xs:complexType name="getOptions">
+<xs:sequence>
+<xs:element name="u" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getOptionsResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="resetGame">
+<xs:sequence>
+<xs:element name="uname" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="resetGameResponse">
+<xs:sequence/>
+</xs:complexType>
+
 <xs:complexType name="hello">
 <xs:sequence>
 <xs:element name="name" type="xs:string" minOccurs="0"/>
@@ -204,28 +240,6 @@
 
 <xs:complexType name="inviteResponse">
 <xs:sequence/>
-</xs:complexType>
-
-<xs:complexType name="resetGame">
-<xs:sequence>
-<xs:element name="uname" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="resetGameResponse">
-<xs:sequence/>
-</xs:complexType>
-
-<xs:complexType name="getOptions">
-<xs:sequence>
-<xs:element name="u" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="getOptionsResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:anyType" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
-</xs:sequence>
 </xs:complexType>
 
 <xs:complexType name="beginGame">
