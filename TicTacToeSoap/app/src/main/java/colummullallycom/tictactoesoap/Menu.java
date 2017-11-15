@@ -18,6 +18,8 @@ public class Menu extends AppCompatActivity {
         uName = (String) b.get("Code");
         inviteBtn = (Button) findViewById(R.id.button9);
         leaderboardBtn=(Button)findViewById(R.id.button4);
+        MenuThread t= new MenuThread(uName,getApplicationContext());
+        new handler;
     }
     protected void onStart() {
         super.onStart();
@@ -50,7 +52,7 @@ public class Menu extends AppCompatActivity {
                                 db.invite(uname, input);
                         }
                 }*/
-                Intent myIntent=new Intent(Menu.this,Game.class);
+                Intent myIntent=new Intent(Menu.this,Invite.class);
                 Bundle bundle= new Bundle();
                 bundle.putString("Code",uName);
                 bundle.putString("Code1",uName);
