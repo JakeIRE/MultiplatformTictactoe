@@ -41,24 +41,27 @@ public class Login extends AppCompatActivity {
                 //checks and stuff
                 Soap db =new Soap();
                 String output = null;
-                try {
-                    output = db.loginVerify(uName, password);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                output = db.loginVerify(uName, password);
                 t.setText(output);
-               /* if(!output.equals("")){
+               if(output.equals("")){
                 Intent myIntent=new Intent(Login.this,Menu.class);
                 Bundle bundle= new Bundle();
                 bundle.putString("Code",uName);
                 myIntent.putExtras(bundle);
-                startActivity(myIntent);}*/
-
+                startActivity(myIntent);}
+                
 
 
             }
         });
 
+        rBtn.setOnClickListener(new OnClickListener(){
+            @Override
+            public void onClick(View v){
+                    Intent myIntent=new Intent(Login.this,Register.class);
+                    startActivity(myIntent);
+            }
+        });
     }
 
 }

@@ -8,6 +8,8 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 
+import ConnectSoap.Soap;
+
 public class Register extends AppCompatActivity {
     EditText uNameIn;
     String uName,password;
@@ -31,12 +33,16 @@ public class Register extends AppCompatActivity {
                 uName = uNameIn.getText().toString();
                 password=passwordIn.getText().toString();
                 //TODO
-                Intent myIntent=new Intent(Register.this,Menu.class);
-                Bundle bundle= new Bundle();
-                bundle.putString("Code",uName);
-                myIntent.putExtras(bundle);
-                startActivity(myIntent);
-
+                String output;
+                Soap db= new Soap();
+                output = db.register(uName, password);
+                if(output.equals("")) {
+                    Intent myIntent = new Intent(Register.this, Menu.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("Code", uName);
+                    myIntent.putExtras(bundle);
+                    startActivity(myIntent);
+                }
             }
         });
 

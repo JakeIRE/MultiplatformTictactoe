@@ -171,10 +171,11 @@ private void writeMetaData(ResultSet resultSet) throws SQLException {
       return "";
   }
   
-  public String loginVerify(String uname, String pass) {
+  public String loginVerify( String uname, String pass) {
     if(!connectionFlag)
         connectDataBase();
     try {
+       // return uname;
       // Result set get the result of the SQL query
       resultSet = statement
           .executeQuery("select uname, password from tictactoe1.players where uname = '"+uname+"'");
@@ -188,8 +189,9 @@ private void writeMetaData(ResultSet resultSet) throws SQLException {
             else
                 return "Password Incorrect";
         }
-        else
-            return "Username incorrect";
+        else{
+            return "Username incorrect"+uname+pass;
+        }
     }
     catch(Exception e){
         
