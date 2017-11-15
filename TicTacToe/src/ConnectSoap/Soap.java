@@ -18,10 +18,6 @@ public class Soap {
         port = web.getTicTacToeWebServicePort();
    }
     
-    public void beginGame(){
-        
-    }
-    
     public String register(String uname, String pass){
         return port.register(uname, pass);
     }
