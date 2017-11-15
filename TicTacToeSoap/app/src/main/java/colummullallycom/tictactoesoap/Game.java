@@ -35,6 +35,23 @@ public class Game extends AppCompatActivity {
         setContentView(R.layout.activity_game);
         Intent iin= getIntent();
         Bundle b = iin.getExtras();
+        gameState = -2;
+        player = 0;
+        numSides = 3;
+        numSquares = 9;
+
+        if(type.equals("X"))
+            turn = true;
+        else
+            turn = false;
+
+        playerBadge = new int[2];
+
+        playerBadge[0] =  0xff5733 ;
+        playerBadge[1] =  0x5eff33 ;
+
+
+
         uName = (String) b.get("Code");
         jName = (String) b.get("Code1");
 
