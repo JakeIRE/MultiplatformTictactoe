@@ -144,7 +144,7 @@ public class Soap{
                 Thread t = new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        SoapObject request = new SoapObject(NAMESPACE, "setOffline");
+                        SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
                         request.addProperty("u", uname);
 
                         SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
@@ -173,7 +173,7 @@ public class Soap{
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
-                SoapObject request = new SoapObject(NAMESPACE, "setOffline");
+                SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
                 request.addProperty("u", uname);
 
                 SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
@@ -242,7 +242,7 @@ public class Soap{
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
-                SoapObject request = new SoapObject(NAMESPACE, "setOffline");
+                SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
                 request.addProperty("uname", uname);
                 request.addProperty("joiner", joiner);
 
@@ -271,7 +271,7 @@ public class Soap{
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
-                SoapObject request = new SoapObject(NAMESPACE, "setOffline");
+                SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
                 request.addProperty("uname", uname);
 
                 SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
@@ -293,6 +293,347 @@ public class Soap{
             e.printStackTrace();
         }
     }
+    public String checkGameStart(final String uname){
+        final String METHOD_NAME = "checkGameStart";
+        final String SOAP_ACTION = NAMESPACE+"/"+METHOD_NAME;
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+
+                SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+                request.addProperty("u", uname);
+
+                SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+
+                envelope.setOutputSoapObject(request);
+
+                HttpTransportSE ht = new HttpTransportSE(URL);
+                try {
+                    ht.call(SOAP_ACTION, envelope);
+                    try {
+                        SoapPrimitive response = (SoapPrimitive) envelope.getResponse();
+                        returner = envelope.getResponse().toString();
+                    }
+                    catch(Exception e){
+                        returner = "";
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    returner = "Error";
+                }
+            }
+        });
+        t.start();
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return returner;
+    }
+    public void invite(final String uname, final String invite){
+        final String METHOD_NAME = "denyGame";
+        final String SOAP_ACTION = NAMESPACE+"/"+METHOD_NAME;
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+                request.addProperty("uname", uname);
+                request.addProperty("invite", invite);
+
+                SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+                envelope.setOutputSoapObject(request);
+                HttpTransportSE ht = new HttpTransportSE(URL);
+
+                try {
+                    ht.call(SOAP_ACTION, envelope);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        t.start();
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+    public String getTurn(final String joiner){
+        final String METHOD_NAME = "getTurn";
+        final String SOAP_ACTION = NAMESPACE+"/"+METHOD_NAME;
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+
+                SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+                request.addProperty("joiner", joiner);
+
+                SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+
+                envelope.setOutputSoapObject(request);
+
+                HttpTransportSE ht = new HttpTransportSE(URL);
+                try {
+                    ht.call(SOAP_ACTION, envelope);
+                    try {
+                        SoapPrimitive response = (SoapPrimitive) envelope.getResponse();
+                        returner = envelope.getResponse().toString();
+                    }
+                    catch(Exception e){
+                        returner = "";
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    returner = "Error";
+                }
+            }
+        });
+        t.start();
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return returner;
+    }
+
+    public void setMove(final String move, final String uname){
+        final String METHOD_NAME = "setMove";
+        final String SOAP_ACTION = NAMESPACE+"/"+METHOD_NAME;
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+
+                request.addProperty("move", move);
+                request.addProperty("uname", uname);
+
+                SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+                envelope.setOutputSoapObject(request);
+                HttpTransportSE ht = new HttpTransportSE(URL);
+
+                try {
+                    ht.call(SOAP_ACTION, envelope);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        t.start();
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+    public void setDraw(final String uname){
+        final String METHOD_NAME = "setDraw";
+        final String SOAP_ACTION = NAMESPACE+"/"+METHOD_NAME;
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+
+                request.addProperty("uname", uname);
+
+                SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+                envelope.setOutputSoapObject(request);
+                HttpTransportSE ht = new HttpTransportSE(URL);
+
+                try {
+                    ht.call(SOAP_ACTION, envelope);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        t.start();
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setWin(final String uname){
+        final String METHOD_NAME = "setWin";
+        final String SOAP_ACTION = NAMESPACE+"/"+METHOD_NAME;
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+
+                request.addProperty("uname", uname);
+
+                SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+                envelope.setOutputSoapObject(request);
+                HttpTransportSE ht = new HttpTransportSE(URL);
+
+                try {
+                    ht.call(SOAP_ACTION, envelope);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        t.start();
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setLoss(final String uname){
+        final String METHOD_NAME = "setLoss";
+        final String SOAP_ACTION = NAMESPACE+"/"+METHOD_NAME;
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+
+                request.addProperty("uname", uname);
+
+                SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+                envelope.setOutputSoapObject(request);
+                HttpTransportSE ht = new HttpTransportSE(URL);
+
+                try {
+                    ht.call(SOAP_ACTION, envelope);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        t.start();
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+    public void resetGame(final String uname){
+        final String METHOD_NAME = "setWin";
+        final String SOAP_ACTION = NAMESPACE+"/"+METHOD_NAME;
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+
+                request.addProperty("uname", uname);
+
+                SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+                envelope.setOutputSoapObject(request);
+                HttpTransportSE ht = new HttpTransportSE(URL);
+
+                try {
+                    ht.call(SOAP_ACTION, envelope);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        t.start();
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String getStats(final String joiner){
+        final String METHOD_NAME = "getStats";
+        final String SOAP_ACTION = NAMESPACE+"/"+METHOD_NAME;
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+
+                SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+                request.addProperty("joiner", joiner);
+
+                SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+
+                envelope.setOutputSoapObject(request);
+
+                HttpTransportSE ht = new HttpTransportSE(URL);
+                try {
+                    ht.call(SOAP_ACTION, envelope);
+                    try {
+                        SoapPrimitive response = (SoapPrimitive) envelope.getResponse();
+                        returner = envelope.getResponse().toString();
+                    }
+                    catch(Exception e){
+                        returner = "";
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    returner = "Error";
+                }
+            }
+        });
+        t.start();
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return returner;
+    }
+
+    public String[] getLeaderboard(){
+        final String METHOD_NAME = "getTurn";
+        final String SOAP_ACTION = NAMESPACE+"/"+METHOD_NAME;
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+
+                SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+
+
+                SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+
+                envelope.setOutputSoapObject(request);
+
+                HttpTransportSE ht = new HttpTransportSE(URL);
+                try {
+                    ht.call(SOAP_ACTION, envelope);
+                    try {
+                        SoapPrimitive response = (SoapPrimitive) envelope.getResponse();
+                        str = envelope.getResponse().toString().split(",");
+                    }
+                    catch(Exception e){
+                        returner = "";
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    returner = "Error";
+                }
+            }
+        });
+        t.start();
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return str;
+    }
+
 
                    /* fromProp.setName("FromCurrency");
                     fromProp.setValue(fromCurrency);
