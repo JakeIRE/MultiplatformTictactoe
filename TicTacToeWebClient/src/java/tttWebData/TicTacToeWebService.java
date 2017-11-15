@@ -173,4 +173,12 @@ public class TicTacToeWebService {
     public void connect() {
         db.connectDataBase();
     }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "getLeaderboard")
+    public String getLeaderboard() {
+        return db.getLeaderboard();
+    }
 }
