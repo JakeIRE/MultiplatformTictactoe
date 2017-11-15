@@ -47,7 +47,7 @@ public class TicTacToeWebService {
      * Web service operation
      */
     @WebMethod(operationName = "getOptions")
-    public Object[] getOptions(@WebParam(name = "u") String u) {
+    public String getOptions(@WebParam(name = "u") String u) {
         return db.getOptions(u);
     }
 

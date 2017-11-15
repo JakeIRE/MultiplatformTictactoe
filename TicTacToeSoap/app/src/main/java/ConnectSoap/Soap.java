@@ -15,12 +15,12 @@ public class Soap{
     private static final String NAMESPACE = "http://tttWebData/";
     private static final String URL = "http:/10.0.2.2:8080/TicTacToeWebClient/TicTacToeWebService?wsdl";
     private String returner;
-    private Object[] str;
+    private String[] str;
 
     public String loginVerify(final String uname, final String pass){
                 final String METHOD_NAME = "loginVerify";
                 final String SOAP_ACTION = NAMESPACE+"/"+METHOD_NAME;
-                new Thread(new Runnable() {
+                Thread t = new Thread(new Runnable() {
                     @Override
                     public void run() {
 
@@ -48,14 +48,20 @@ public class Soap{
                             returner = "Error";
                         }
                     }
-                }).start();
+                });
+                t.start();
+                try {
+                    t.join();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 return returner;
             }
 
     public String register(final String uname, final String pass){
         final String METHOD_NAME = "register";
         final String SOAP_ACTION = NAMESPACE+"/"+METHOD_NAME;
-        new Thread(new Runnable() {
+        Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
 
@@ -83,14 +89,20 @@ public class Soap{
                     returner = "Error";
                 }
             }
-        }).start();
+        });
+        t.start();
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return returner;
     }
 
-    public Object[] getOptions(final String uname){
+    public String[] getOptions(final String uname){
         final String METHOD_NAME = "getOptions";
         final String SOAP_ACTION = NAMESPACE+"/"+METHOD_NAME;
-        new Thread(new Runnable() {
+        Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
 
@@ -117,13 +129,19 @@ public class Soap{
                     returner = "Error";
                 }
             }
-        }).start();
+        });
+        t.start();
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return str;
     }
             public void setOffline(final String uname){
                 final String METHOD_NAME = "setOffline";
                 final String SOAP_ACTION = NAMESPACE+"/"+METHOD_NAME;
-                new Thread(new Runnable() {
+                Thread t = new Thread(new Runnable() {
                     @Override
                     public void run() {
                         SoapObject request = new SoapObject(NAMESPACE, "setOffline");
@@ -140,13 +158,19 @@ public class Soap{
                             e.printStackTrace();
                         }
                     }
-                }).start();
+                });
+                t.start();
+                try {
+                    t.join();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
 
     public void setOnline(final String uname){
         final String METHOD_NAME = "setOnline";
         final String SOAP_ACTION = NAMESPACE+"/"+METHOD_NAME;
-        new Thread(new Runnable() {
+        Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
                 SoapObject request = new SoapObject(NAMESPACE, "setOffline");
@@ -163,14 +187,21 @@ public class Soap{
                     e.printStackTrace();
                 }
             }
-        }).start();
+        });
+        t.start();
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
     public String getJoiner(final String uname){
         final String METHOD_NAME = "getJoiner";
         final String SOAP_ACTION = NAMESPACE+"/"+METHOD_NAME;
-        new Thread(new Runnable() {
+        Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
+
 
                 SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
                 request.addProperty("u", uname);
@@ -195,14 +226,20 @@ public class Soap{
                     returner = "Error";
                 }
             }
-        }).start();
+        });
+        t.start();
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return returner;
     }
 
     public void beginGame(final String uname, final String joiner){
         final String METHOD_NAME = "beeginGame";
         final String SOAP_ACTION = NAMESPACE+"/"+METHOD_NAME;
-        new Thread(new Runnable() {
+        Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
                 SoapObject request = new SoapObject(NAMESPACE, "setOffline");
@@ -220,7 +257,41 @@ public class Soap{
                     e.printStackTrace();
                 }
             }
-        }).start();
+        });
+        t.start();
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+    public void denyGame(final String uname){
+        final String METHOD_NAME = "denyGame";
+        final String SOAP_ACTION = NAMESPACE+"/"+METHOD_NAME;
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SoapObject request = new SoapObject(NAMESPACE, "setOffline");
+                request.addProperty("uname", uname);
+
+                SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+                envelope.setOutputSoapObject(request);
+                HttpTransportSE ht = new HttpTransportSE(URL);
+
+                try {
+                    ht.call(SOAP_ACTION, envelope);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        t.start();
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
                    /* fromProp.setName("FromCurrency");
