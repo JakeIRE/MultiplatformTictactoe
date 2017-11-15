@@ -1,13 +1,16 @@
 package colummullallycom.tictactoesoap;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import ConnectSoap.Soap;
 
@@ -64,24 +67,40 @@ public class Menu extends AppCompatActivity {
     }
 
     private void displayJoinerOption(String joiner, Context baseContext) {
-        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle("Title");
+        builder.setMessage("Is this a question?");
+
+
+        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                switch (which){
-                    case DialogInterface.BUTTON_POSITIVE:
-                        //Yes button clicked
-                        break;
 
-                    case DialogInterface.BUTTON_NEGATIVE:
-                        //No button clicked
-                        break;
-                }
+                // Code that is executed when clicking YES
+
+                dialog.dismiss();
             }
-        };
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(baseContext);
-        builder.setMessage("Are you sure?").setPositiveButton("Yes", dialogClickListener)
-                .setNegativeButton("No", dialogClickListener).show();
+        });
+
+
+        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                // Code that is executed when clicking NO
+
+                dialog.dismiss();
+            }
+
+        });
+
+
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     protected void onStart() {
