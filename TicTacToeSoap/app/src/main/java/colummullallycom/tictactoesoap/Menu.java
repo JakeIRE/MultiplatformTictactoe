@@ -42,10 +42,11 @@ public class Menu extends AppCompatActivity {
                         }
                         String joiner = db.getJoiner(uName);
                         if(!joiner.equals("") || displayJoiner){
+                            inviteBtn.setText(joiner);
                             displayJoiner = true;
                             displayJoinerOption(joiner,getBaseContext());
                         }
-                        sleep(100);
+                        sleep(10000);
                     } catch (Exception ex) {
                         System.out.println("You're dumb");
                     }

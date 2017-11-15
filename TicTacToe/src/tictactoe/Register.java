@@ -171,6 +171,7 @@ public class Register extends JFrame implements ActionListener {
     
     public void mainMenu(String uname) throws Exception {
         dispose();
-        new MainMenu(uname, db);
+        MenuThread m = new MenuThread(uname, db);
+        m.start();
     }
 }

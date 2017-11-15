@@ -23,7 +23,7 @@ public class Game extends AppCompatActivity {
         Bundle b = iin.getExtras();
         uName = (String) b.get("Code");
         jName = (String) b.get("Code1");
-        t = new Thread(new Runnable() {
+       /* t = new Thread(new Runnable() {
             @Override
             public void run() {
                 while(threadRun){
@@ -48,7 +48,7 @@ public class Game extends AppCompatActivity {
                         }
                         sleep(1000);
                     } catch (Exception ex) {
-                        System.out.println("These aren't the bugs youre looking for")
+                        System.out.println("These aren't the bugs youre looking for");
                     }
                 }
             }
@@ -117,7 +117,7 @@ public class Game extends AppCompatActivity {
             }
         } else {
             JOptionPane.showMessageDialog(null, "Game Over.\n Please press reset to restart.", "Game Over", ERROR_MESSAGE);
-        }
+        }*/
     }
 
 }

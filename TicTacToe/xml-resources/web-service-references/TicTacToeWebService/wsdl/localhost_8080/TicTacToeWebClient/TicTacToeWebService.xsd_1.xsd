@@ -209,16 +209,6 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="resetGame">
-<xs:sequence>
-<xs:element name="uname" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="resetGameResponse">
-<xs:sequence/>
-</xs:complexType>
-
 <xs:complexType name="hello">
 <xs:sequence>
 <xs:element name="name" type="xs:string" minOccurs="0"/>
@@ -239,6 +229,16 @@
 </xs:complexType>
 
 <xs:complexType name="inviteResponse">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="resetGame">
+<xs:sequence>
+<xs:element name="uname" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="resetGameResponse">
 <xs:sequence/>
 </xs:complexType>
 

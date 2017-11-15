@@ -43,7 +43,7 @@ public class Invite extends AppCompatActivity {
 
                 // ListView Clicked item value
                 String  joiner    = (String) invitels.getItemAtPosition(position);
-                //db.invite(uName,joiner);
+                db.invite(uName,joiner);
                 Intent myIntent=new Intent(Invite.this,Menu.class);
                 Bundle bundle= new Bundle();
                 bundle.putString("Code",uName);

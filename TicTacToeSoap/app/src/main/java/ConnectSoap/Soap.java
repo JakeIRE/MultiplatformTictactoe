@@ -305,7 +305,6 @@ public class Soap{
                 request.addProperty("u", uname);
 
                 SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
-
                 envelope.setOutputSoapObject(request);
 
                 HttpTransportSE ht = new HttpTransportSE(URL);
@@ -334,7 +333,7 @@ public class Soap{
         return returner;
     }
     public void invite(final String uname, final String invite){
-        final String METHOD_NAME = "denyGame";
+        final String METHOD_NAME = "invite";
         final String SOAP_ACTION = NAMESPACE+"/"+METHOD_NAME;
         Thread t = new Thread(new Runnable() {
             @Override
