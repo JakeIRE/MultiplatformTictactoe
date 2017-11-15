@@ -5,9 +5,10 @@
  */
 package tictactoe;
 
-import de.vogella.mysql.first.MySQLAccess;
+import javax.xml.soap.*;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import ConnectSoap.Soap;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import static java.awt.SystemColor.menuText;
@@ -20,6 +21,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
@@ -32,40 +34,99 @@ public class Register extends JFrame implements ActionListener {
     private JPanel menu;
     private JLabel menuText;
     private JButton submit;
-    private JTextField field[] = {new JTextField(1), new JTextField(1),new JTextField(1)};
-    private MySQLAccess db = new MySQLAccess();
-        public Register()  throws Exception{
-            db.connectDataBase();
-            this.setTitle("Register tictactoe account");
-            this.setBounds(100,100,100,300);
-            this.setPreferredSize(new Dimension(800,500));
-            this.setLayout(new GridLayout(1,1));
-            this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-            
-            
-            
-            menu = new JPanel();
-            menu.setLayout(new GridLayout(5,2));
+    private JPasswordField pField[] = {new JPasswordField(1), new JPasswordField(1)};
+    private Soap db = new Soap();
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    
+    private javax.swing.JTextField unameTextField;
+    
+        public Register(){
+           setDefaultCloseOperation(Welcome.EXIT_ON_CLOSE);
+        menu = new javax.swing.JPanel();
+        submit = new javax.swing.JButton();
+        unameTextField = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        menuText = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        pField[0] = new javax.swing.JPasswordField();
+        pField[1] = new javax.swing.JPasswordField();
 
-            menuText = new JLabel("Click on a square to start.", SwingConstants.CENTER);
-            menuText.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-            
-            menu = new JPanel();
-            menu.setLayout(new GridLayout(3,1));
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-            menuText = new JLabel("Enter Account details", SwingConstants.CENTER);
-            menuText.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-            menu.add(menuText);
-            menu.add(field[0]);
-            menu.add(field[1]);
-            menu.add(field[2]);
-            
-            submit = new JButton("Submit");
-            submit.addActionListener(this);
-            menu.add(submit);
-            this.add(menu);
-            this.pack();
-            this.setVisible(true);
+        submit.setText("Submit");
+        submit.addActionListener(this);
+
+
+        jLabel1.setText("Enter Username: ");
+
+        menuText.setText("Enter Register Details");
+
+        jLabel2.setText("Password:");
+
+        jLabel3.setText("Confirm Password:");
+
+        javax.swing.GroupLayout menuLayout = new javax.swing.GroupLayout(menu);
+        menu.setLayout(menuLayout);
+        menuLayout.setHorizontalGroup(
+            menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(menuLayout.createSequentialGroup()
+                .addGroup(menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(menuLayout.createSequentialGroup()
+                        .addGap(68, 68, 68)
+                        .addGroup(menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3))
+                        .addGap(55, 55, 55)
+                        .addGroup(menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(unameTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
+                            .addComponent(pField[0])
+                            .addComponent(pField[1])))
+                    .addGroup(menuLayout.createSequentialGroup()
+                        .addGap(156, 156, 156)
+                        .addGroup(menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(menuText)
+                            .addComponent(submit, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(18, Short.MAX_VALUE))
+        );
+        menuLayout.setVerticalGroup(
+            menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(menuLayout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addComponent(menuText)
+                .addGap(42, 42, 42)
+                .addGroup(menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(unameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addGap(18, 18, 18)
+                .addGroup(menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(pField[0], javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(pField[1], javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                .addComponent(submit)
+                .addGap(52, 52, 52))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(menu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(menu, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        pack();
+        setVisible(true);
         }
 
     @Override
@@ -83,9 +144,9 @@ public class Register extends JFrame implements ActionListener {
     
     public void verifyDetails() throws Exception{
         String uname, p1, p2;
-        uname = field[0].getText();
-        p1 = field[1].getText();
-        p2 = field[2].getText();
+        uname = unameTextField.getText();
+        p1 = pField[0].getText();
+        p2 = pField[1].getText();
         if(p1.equals(p2))
             if(p1.length() > 0)
                 if(uname.length() > 0)

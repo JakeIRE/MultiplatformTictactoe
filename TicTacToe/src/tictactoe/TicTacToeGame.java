@@ -16,9 +16,11 @@ import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
-import de.vogella.mysql.first.MySQLAccess;
+import static java.lang.Thread.sleep;
 import java.util.logging.Level;
+import ConnectSoap.Soap;
 import java.util.logging.Logger;
+
 
 /**
  *
@@ -31,7 +33,7 @@ public class TicTacToeGame extends JFrame implements ActionListener {
     private JLabel menuText, curPlayerID;
     private JButton[] squares;
     private JButton reset;
-    
+    private String type;
     private int[][] board;
     private Color[] playerBadge;
     private int player;
@@ -41,12 +43,16 @@ public class TicTacToeGame extends JFrame implements ActionListener {
     private boolean turn;
     private String uname;
     private String joiner;
-    private MySQLAccess db;
+    private Soap db;
+    private boolean resetRequest = false;
+    private boolean myReset = false;
+    private boolean threadRun = true;
     
-    public TicTacToeGame(String uname, String joiner, String type, MySQLAccess db) throws Exception {
+    public TicTacToeGame(String uname, String joiner, String type, Soap db){
         this.db = db;
         this.uname = uname;
         this.joiner = joiner;
+        this.type = type;
         gameState = -2;
         player = 0;
         numSides = 3;
@@ -96,12 +102,16 @@ public class TicTacToeGame extends JFrame implements ActionListener {
         menuText.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
         
         curPlayerID = new JLabel("It's player " + (player + 1) + "'s move", SwingConstants.CENTER);
+        if(turn)
+            curPlayerID.setText("It's your move");
+        else
+            curPlayerID.setText("It's player " +this.joiner+ "'s move");
         curPlayerID.setBackground(playerBadge[player]);
         curPlayerID.setForeground(Color.WHITE);
         curPlayerID.setOpaque(true);
         curPlayerID.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
         
-        reset = new JButton("Start New Game");
+        reset = new JButton("Quit");
         reset.addActionListener(this);
         
         menu.add(menuText);
@@ -118,13 +128,20 @@ public class TicTacToeGame extends JFrame implements ActionListener {
         JButton source = (JButton) ae.getSource();
         
         if(source.equals(reset)) {
-            reset();
+            try {
+                db.setMove("QUIT", uname);
+                dispose();
+                sleep(1000);
+                quit();
+            } catch (Exception ex) {
+                Logger.getLogger(TicTacToeGame.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         if(turn){
             if(source.equals(squares[0])) {
                 play(0);
                 try {
-                    db.setMove("Move 0", uname);
+                    db.setMove("MOVE,0", uname);
                 } catch (Exception ex) {
                     Logger.getLogger(TicTacToeGame.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -133,7 +150,7 @@ public class TicTacToeGame extends JFrame implements ActionListener {
             if(source.equals(squares[1])) {
                 play(1);
                 try {
-                    db.setMove("Move 1", uname);
+                    db.setMove("MOVE,1", uname);
                 } catch (Exception ex) {
                     Logger.getLogger(TicTacToeGame.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -142,7 +159,7 @@ public class TicTacToeGame extends JFrame implements ActionListener {
             if(source.equals(squares[2])) {
                 play(2);
                 try {
-                    db.setMove("Move 2", uname);
+                    db.setMove("MOVE,2", uname);
                 } catch (Exception ex) {
                     Logger.getLogger(TicTacToeGame.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -151,7 +168,7 @@ public class TicTacToeGame extends JFrame implements ActionListener {
             if(source.equals(squares[3])) {
                 play(3);
                 try {
-                    db.setMove("Move 3", uname);
+                    db.setMove("MOVE,3", uname);
                 } catch (Exception ex) {
                     Logger.getLogger(TicTacToeGame.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -160,7 +177,7 @@ public class TicTacToeGame extends JFrame implements ActionListener {
             if(source.equals(squares[4])) {
                 play(4);
                 try {
-                    db.setMove("Move 4", uname);
+                    db.setMove("MOVE,4", uname);
                 } catch (Exception ex) {
                     Logger.getLogger(TicTacToeGame.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -169,7 +186,7 @@ public class TicTacToeGame extends JFrame implements ActionListener {
             if(source.equals(squares[5])) {
                 play(5);
                 try {
-                    db.setMove("Move 5", uname);
+                    db.setMove("MOVE,5", uname);
                 } catch (Exception ex) {
                     Logger.getLogger(TicTacToeGame.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -178,7 +195,7 @@ public class TicTacToeGame extends JFrame implements ActionListener {
             if(source.equals(squares[6])) {
                 play(6);
                 try {
-                    db.setMove("Move 6", uname);
+                    db.setMove("MOVE,6", uname);
                 } catch (Exception ex) {
                     Logger.getLogger(TicTacToeGame.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -187,7 +204,7 @@ public class TicTacToeGame extends JFrame implements ActionListener {
             if(source.equals(squares[7])) {
                 play(7);
                 try {
-                    db.setMove("Move 7", uname);
+                    db.setMove("MOVE,7", uname);
                 } catch (Exception ex) {
                     Logger.getLogger(TicTacToeGame.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -196,7 +213,7 @@ public class TicTacToeGame extends JFrame implements ActionListener {
             if(source.equals(squares[8])) {
                 play(8);
                 try {
-                    db.setMove("Move 8", uname);
+                    db.setMove("MOVE,8", uname);
                 } catch (Exception ex) {
                     Logger.getLogger(TicTacToeGame.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -209,7 +226,7 @@ public class TicTacToeGame extends JFrame implements ActionListener {
         board[x][y] = player;
     }
     
-    public void play(int n) {
+    public void play(int n){
         if(turn)
             turn = false;
         else
@@ -227,20 +244,33 @@ public class TicTacToeGame extends JFrame implements ActionListener {
                     case -2:
                         player = getPlayer();
                         numSquares = numSquares - 1;
-                        curPlayerID.setText("It's player " + (player + 1) + "'s move");
+                        if(turn)
+                            curPlayerID.setText("It's your move");
+                        else
+                            curPlayerID.setText("It's player " +joiner+ "'s move");
                         curPlayerID.setBackground(playerBadge[player]);
                     break;
                     
                     case -1:
                         JOptionPane.showMessageDialog(null, "Game over.\n It's a draw", "Drawn Game!", INFORMATION_MESSAGE);
+                        db.setDraw(uname);
                     break;
                     
                     case 0: 
                         JOptionPane.showMessageDialog(null, "Game over.\n Player 1 Wins!", "PLAYER 1 WINS!", INFORMATION_MESSAGE);
+                        if(type.equals("X"))
+                            db.setWin(uname);
+                        else
+                            db.setLoss(uname);
+                        
                     break;
                     
                     case 1:
                         JOptionPane.showMessageDialog(null, "Game over.\n Player 2 Wins!", "PLAYER 2 WINS!", INFORMATION_MESSAGE);
+                        if(!type.equals("X"))
+                            db.setWin(uname);
+                        else
+                            db.setLoss(uname);
                     break;
                     
                     default:
@@ -301,6 +331,7 @@ public class TicTacToeGame extends JFrame implements ActionListener {
     }
     
     public void reset() {
+        resetRequest = false;
         gameState = -2;
         player = 0; 
         numSquares = 9;
@@ -311,8 +342,45 @@ public class TicTacToeGame extends JFrame implements ActionListener {
                 squares[((i*numSides) + j)].setBackground(Color.WHITE);
             }
         }
-        
-        curPlayerID.setText("It's player " + (player + 1) + "'s move");
+        if(turn)
+            curPlayerID.setText("It's your move");
+        else
+            curPlayerID.setText("It's player " +joiner+ "'s move");
         curPlayerID.setBackground(playerBadge[player]);
+    }
+
+    public void resetRequest() {
+        myReset = true;
+        try {
+            db.setMove("RESET", uname);
+        } catch (Exception ex) {
+            Logger.getLogger(TicTacToeGame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void setReset(){
+        resetRequest = true;
+    }
+    
+    public boolean getReset(){
+        return myReset;
+    }
+    public void disableReset(){
+        resetRequest = false;
+        myReset = false;
+    }
+    
+    public boolean threadRun(){
+        return threadRun;
+    }
+    public void quit(){
+        try {
+                threadRun = false;
+                dispose();
+                MenuThread m = new MenuThread(uname, db);
+                m.start();
+            } catch (Exception ex) {
+                Logger.getLogger(TicTacToeGame.class.getName()).log(Level.SEVERE, null, ex);
+            }
     }
 }
