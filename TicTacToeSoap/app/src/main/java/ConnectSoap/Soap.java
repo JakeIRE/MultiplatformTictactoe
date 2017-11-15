@@ -237,7 +237,7 @@ public class Soap{
     }
 
     public void beginGame(final String uname, final String joiner){
-        final String METHOD_NAME = "beeginGame";
+        final String METHOD_NAME = "beginGame";
         final String SOAP_ACTION = NAMESPACE+"/"+METHOD_NAME;
         Thread t = new Thread(new Runnable() {
             @Override
@@ -522,7 +522,7 @@ public class Soap{
         }
     }
     public void resetGame(final String uname){
-        final String METHOD_NAME = "setWin";
+        final String METHOD_NAME = "resetGame";
         final String SOAP_ACTION = NAMESPACE+"/"+METHOD_NAME;
         Thread t = new Thread(new Runnable() {
             @Override

@@ -19,6 +19,7 @@ import static java.lang.Thread.sleep;
 public class Menu extends AppCompatActivity {
     String uName;
     Thread t;
+
     Button quitBtn,inviteBtn,leaderboardBtn;
     Soap db = new Soap();
     boolean threadRun = true;
@@ -30,6 +31,7 @@ public class Menu extends AppCompatActivity {
         Intent iin= getIntent();
         Bundle b = iin.getExtras();
         uName = (String) b.get("Code");
+        db.setOnline(uName);
         t =  new Thread(new Runnable() {
             @Override
             public void run() {
@@ -44,11 +46,11 @@ public class Menu extends AppCompatActivity {
                         if(!joiner.equals("") || displayJoiner){
                             inviteBtn.setText(joiner);
                             displayJoiner = true;
-                            displayJoinerOption(joiner,getBaseContext());
+                           // displayJoinerOption(joiner,getBaseContext());
                         }
-                        sleep(10000);
+                        sleep(100);
                     } catch (Exception ex) {
-                        System.out.println("You're dumb");
+                        System.out.println(ex.toString());
                     }
                 }
             }
@@ -102,6 +104,7 @@ public class Menu extends AppCompatActivity {
 
         AlertDialog alert = builder.create();
         alert.show();
+        inviteBtn.setText("end of dialog");
     }
 
     protected void onStart() {
