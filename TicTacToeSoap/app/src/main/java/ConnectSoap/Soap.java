@@ -15,6 +15,7 @@ public class Soap{
     private static final String NAMESPACE = "http://tttWebData/";
     private static final String URL = "http:/10.0.2.2:8080/TicTacToeWebClient/TicTacToeWebService?wsdl";
     private String returner;
+    private Object[] str;
 
     public String loginVerify(final String uname, final String pass){
                 final String METHOD_NAME = "loginVerify";
@@ -34,8 +35,13 @@ public class Soap{
                         HttpTransportSE ht = new HttpTransportSE(URL);
                         try {
                             ht.call(SOAP_ACTION, envelope);
-                            SoapPrimitive response = (SoapPrimitive)envelope.getResponse();
-                            returner = envelope.getResponse().toString() + " Success/";
+                            try {
+                                SoapPrimitive response = (SoapPrimitive) envelope.getResponse();
+                                returner = envelope.getResponse().toString();
+                            }
+                            catch(Exception e){
+                                returner = "";
+                            }
 
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -64,8 +70,13 @@ public class Soap{
                 HttpTransportSE ht = new HttpTransportSE(URL);
                 try {
                     ht.call(SOAP_ACTION, envelope);
-                    SoapPrimitive response = (SoapPrimitive)envelope.getResponse();
-                    returner = envelope.getResponse().toString() + " Success/";
+                    try {
+                        SoapPrimitive response = (SoapPrimitive) envelope.getResponse();
+                        returner = envelope.getResponse().toString();
+                    }
+                    catch(Exception e){
+                        returner = "";
+                    }
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -76,6 +87,39 @@ public class Soap{
         return returner;
     }
 
+    public Object[] getOptions(final String uname){
+        final String METHOD_NAME = "getOptions";
+        final String SOAP_ACTION = NAMESPACE+"/"+METHOD_NAME;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+                request.addProperty("u", uname);
+
+                SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+
+                envelope.setOutputSoapObject(request);
+
+                HttpTransportSE ht = new HttpTransportSE(URL);
+                try {
+                    ht.call(SOAP_ACTION, envelope);
+                    try {
+                        SoapPrimitive response = (SoapPrimitive) envelope.getResponse();
+                        str = envelope.getResponse().toString().split(",");
+                    }
+                    catch(Exception e){
+                        returner = "";
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    returner = "Error";
+                }
+            }
+        }).start();
+        return str;
+    }
             public void setOffline(final String uname){
                 final String METHOD_NAME = "setOffline";
                 final String SOAP_ACTION = NAMESPACE+"/"+METHOD_NAME;
@@ -99,6 +143,85 @@ public class Soap{
                 }).start();
             }
 
+    public void setOnline(final String uname){
+        final String METHOD_NAME = "setOnline";
+        final String SOAP_ACTION = NAMESPACE+"/"+METHOD_NAME;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SoapObject request = new SoapObject(NAMESPACE, "setOffline");
+                request.addProperty("u", uname);
+
+                SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+                envelope.setOutputSoapObject(request);
+                HttpTransportSE ht = new HttpTransportSE(URL);
+
+                try {
+                    ht.call(SOAP_ACTION, envelope);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+    public String getJoiner(final String uname){
+        final String METHOD_NAME = "getJoiner";
+        final String SOAP_ACTION = NAMESPACE+"/"+METHOD_NAME;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+                request.addProperty("u", uname);
+
+                SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+
+                envelope.setOutputSoapObject(request);
+
+                HttpTransportSE ht = new HttpTransportSE(URL);
+                try {
+                    ht.call(SOAP_ACTION, envelope);
+                    try {
+                        SoapPrimitive response = (SoapPrimitive) envelope.getResponse();
+                        returner = envelope.getResponse().toString();
+                    }
+                    catch(Exception e){
+                        returner = "";
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    returner = "Error";
+                }
+            }
+        }).start();
+        return returner;
+    }
+
+    public void beginGame(final String uname, final String joiner){
+        final String METHOD_NAME = "beeginGame";
+        final String SOAP_ACTION = NAMESPACE+"/"+METHOD_NAME;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SoapObject request = new SoapObject(NAMESPACE, "setOffline");
+                request.addProperty("uname", uname);
+                request.addProperty("joiner", joiner);
+
+                SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+                envelope.setOutputSoapObject(request);
+                HttpTransportSE ht = new HttpTransportSE(URL);
+
+                try {
+                    ht.call(SOAP_ACTION, envelope);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
 
                    /* fromProp.setName("FromCurrency");
                     fromProp.setValue(fromCurrency);
