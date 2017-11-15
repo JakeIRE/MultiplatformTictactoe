@@ -5,8 +5,7 @@
  */
 package tictactoe;
 
-
-import ConnectSoap.Soap;
+import de.vogella.mysql.first.MySQLAccess;
 import static java.lang.Thread.sleep;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,41 +18,41 @@ public class GameThread extends Thread{
     private boolean threadRun = false;
     private String type;
     private String joiner;
-    private Soap db;
+    private MySQLAccess db;
     private String uname;
     private TicTacToeGame m;
 
-    public GameThread(String uname, String joiner, String type, Soap db){
+    public GameThread(String uname, String joiner, String type, MySQLAccess db) throws Exception{
         this.db = db;
         this.uname = uname;
         this.joiner = joiner;
         this.type = type;
+        threadRun = true;
         m = new TicTacToeGame(uname, joiner, type, db);
     }
 
     public void run(){
-        while(m.threadRun()){
-            String lastTurn = null;
+        while(threadRun){
+            String lastTurn = "";
             String temp = null;
             try {
                 temp = db.getTurn(joiner);
-                if(!temp.equals(lastTurn)){
+            } catch (Exception ex) {
+                Logger.getLogger(GameThread.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if(!temp.equals(lastTurn)){
                 lastTurn = temp;
-                String[] move = lastTurn.split(",");
-                if(move[0].equals("MOVE")){
-                    if(move[1].matches("[0-9]")){
-                        m.disableReset();
-                        m.play(Integer.parseInt(move[1]));
-                        db.resetGame(joiner);
-                    }
+                String[] move = lastTurn.split(" ");
+                if(move.length > 1){
+                    m.play(Integer.parseInt(move[1]));
+                }
+                else if(move[0].equals("RESET")){
                     
                 }
-                else if(move[0].equals("QUIT")){
-                    m.quit();
-                }
-                }
+            }
+            try {
                 sleep(1000);
-            } catch (Exception ex) {
+            } catch (InterruptedException ex) {
                 Logger.getLogger(GameThread.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
