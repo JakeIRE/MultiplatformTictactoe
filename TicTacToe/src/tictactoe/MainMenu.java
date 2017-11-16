@@ -43,7 +43,17 @@ public class MainMenu extends JFrame implements ActionListener {
     public MainMenu(String uname, Soap db){
         this.uname = uname;
         this.db = db;
+<<<<<<< HEAD
         this.setDefaultCloseOperation(quit());
+=======
+        this. setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+this.addWindowListener(new java.awt.event.WindowAdapter() {
+    @Override
+    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                quit();
+    }
+});
+>>>>>>> eda1f16ece16831795ad2c602412536d60ff52aa
         db.setOnline(uname);
         db.resetGame(uname);
         menu = new javax.swing.JPanel();
@@ -176,6 +186,7 @@ public class MainMenu extends JFrame implements ActionListener {
         inviteBool = true;
     }
 
+<<<<<<< HEAD
     private int quit() {
          dispose();
         threadRun = false;
@@ -185,5 +196,16 @@ public class MainMenu extends JFrame implements ActionListener {
             Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
         return 0;
+=======
+    private void quit() {
+     dispose();
+            threadRun = false;
+            try {
+                db.setOffline(uname);
+            } catch (Exception ex) {
+                Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            System.exit(0);
+>>>>>>> eda1f16ece16831795ad2c602412536d60ff52aa
     }
 }
