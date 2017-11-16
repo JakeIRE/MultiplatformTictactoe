@@ -56,6 +56,7 @@ public class Menu extends AppCompatActivity {
                         joiner = db.getJoiner(uName);
                         if(!joiner.equals("") && !displayJoiner && threadRun){
                             threadRun = false;
+                            startActivityFromMainThread();
 
                         }
                     } catch (Exception ex) {
@@ -105,6 +106,7 @@ public class Menu extends AppCompatActivity {
         handler.post(new Runnable() {
             @Override
             public void run() {
+                System.out.println("dfghj");
                 Intent myIntent=new Intent(Menu.this,inviteQuestion.class);
                 Bundle bundle= new Bundle();
                 bundle.putString("Code",uName);

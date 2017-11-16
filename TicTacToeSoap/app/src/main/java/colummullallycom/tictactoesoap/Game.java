@@ -83,6 +83,7 @@ public class Game extends AppCompatActivity {
             @Override
             public void run() {
                 while(threadRun){
+                    System.out.println("hitting thread");
                     String lastTurn = null;
                     temp = null;
 
@@ -93,6 +94,7 @@ public class Game extends AppCompatActivity {
                             lastTurn = temp;
                             String[] move = lastTurn.split(",");
                             if(move[0].equals("MOVE")){
+                                System.out.println("das");
                                 if(move[1].matches("[0-9]")){
                                     xfug =Integer.parseInt(move[1]);
                                     Handler handler = new Handler(Looper.getMainLooper());
@@ -100,6 +102,7 @@ public class Game extends AppCompatActivity {
                                         @Override
                                         public void run() {
                                             play(xfug);
+                                            System.out.println("hitting play");
                                         }
                                     });
                                     db.resetGame(jName);
@@ -295,12 +298,13 @@ public class Game extends AppCompatActivity {
                         }
                         curPlayerID.setBackgroundColor(Color.CYAN);
                         if(turn){
-                            curPlayerID.setText("Game over.\n You lost!");
+                            curPlayerID.setBackgroundColor(Color.CYAN);
+                            curPlayerID.setText("Game over.\n You Won!");
                             db.setWin(uName);
                         }
                         else{
                             curPlayerID.setBackgroundColor(Color.CYAN);
-                            curPlayerID.setText("Game over.\n You Won!");
+                            curPlayerID.setText("Game over.\n You Lost!");
                             db.setLoss(uName);
                         }
 
@@ -313,12 +317,12 @@ public class Game extends AppCompatActivity {
 
                         if(turn){
                             curPlayerID.setBackgroundColor(Color.CYAN);
-                            curPlayerID.setText("Game over.\n You Lost!");
+                            curPlayerID.setText("Game over.\n You Won!");
                             db.setWin(uName);
                         }
                         else{
                             curPlayerID.setBackgroundColor(Color.CYAN);
-                            curPlayerID.setText("Game over.\n You Won!");
+                            curPlayerID.setText("Game over.\n You Lost!");
                             db.setLoss(uName);
                         }
                         break;
@@ -346,26 +350,21 @@ public class Game extends AppCompatActivity {
         for(int i=0;i<numSides;i++) {
             if(board[i][0] == p && board[i][1] == p && board[i][2] == p) {
                 state = p;
-                System.out.println("1st");
             }
             if(board[0][i] == p && board[1][i] == p && board[2][i] == p) {
                 state = p;
-                System.out.println("2nd");
             }
         }
 
         if(board[0][0] == p && board[1][1] == p && board[2][2] == p) {
             state = p;
-            System.out.println("3rd");
         }
         if(board[0][2] == p && board[1][1] == p && board[2][0] == p) {
             state = p;
-            System.out.println("4th");
         }
 
         if(numSquares == 1) {
             state = -1;
-            System.out.println("5th");
         }
         return state;
     }
@@ -375,7 +374,7 @@ public class Game extends AppCompatActivity {
     }
 
     public void takeSquare(int x, int y, int p) {
-        board[x][y] = player;
+        board[x][y] = -1;
     }
 
     public boolean taken(int n) {
