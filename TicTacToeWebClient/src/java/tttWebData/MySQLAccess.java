@@ -558,9 +558,9 @@ private void writeMetaData(ResultSet resultSet) throws SQLException {
               .executeQuery("select uname, wins, losses from tictactoe1.players ORDER BY wins DESC");
             String output = "";
             String next = "";
-            output = "Names\tWins\tLosses";
+            output = "Names  |  Wins  |  Losses";
             while(resultSet.next()){
-                next = resultSet.getString("uname") + "\t"+ resultSet.getInt("wins" )+"\t"+ resultSet.getInt("losses");
+                next = resultSet.getString("uname") + "  |  "+ resultSet.getInt("wins" )+"  |  "+ resultSet.getInt("losses");
                 output +="," +next;
             }
 

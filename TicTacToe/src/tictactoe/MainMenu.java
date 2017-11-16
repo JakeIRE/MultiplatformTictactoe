@@ -33,6 +33,7 @@ public class MainMenu extends JFrame implements ActionListener {
     private javax.swing.JButton invite;
     private javax.swing.JPanel menu;
     private javax.swing.JLabel menuText;
+    private javax.swing.JButton leaderboard;
     private String uname;
     private Soap db;
     private String type = "O";
@@ -45,63 +46,64 @@ public class MainMenu extends JFrame implements ActionListener {
         this.db = db;
 
         this. setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-this.addWindowListener(new java.awt.event.WindowAdapter() {
-    @Override
-    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                quit();
-    }
-});
+        this.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                        quit();
+            }
+        });
         db.setOnline(uname);
         db.resetGame(uname);
         menu = new javax.swing.JPanel();
         invite = new javax.swing.JButton();
-        quit = new javax.swing.JButton();
         menuText = new javax.swing.JLabel();
+        leaderboard = new javax.swing.JButton();
+        quit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        invite.setText("Invite a Player");
+        invite.setText("Invite a player");
         invite.addActionListener(this);
-        
+
+        menuText.setText(db.getStats(uname));
+
+        leaderboard.setText("Leaderboard");
+        leaderboard.addActionListener(this);
+
         quit.setText("Quit");
+        quit.setToolTipText("");
         quit.addActionListener(this);
-
-        menuText.setText(getStats());
-
-        javax.swing.GroupLayout menuLayout = new javax.swing.GroupLayout(menu);
-        menu.setLayout(menuLayout);
-        menuLayout.setHorizontalGroup(
-            menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(menuLayout.createSequentialGroup()
-                .addGap(160, 160, 160)
-                .addGroup(menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(menuText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(invite, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(quit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(137, Short.MAX_VALUE))
-        );
-        menuLayout.setVerticalGroup(
-            menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(menuLayout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addComponent(menuText)
-                .addGap(45, 45, 45)
-                .addComponent(invite)
-                .addGap(52, 52, 52)
-                .addComponent(quit)
-                .addContainerGap(96, Short.MAX_VALUE))
-        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(menu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(menuText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(137, 137, 137)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(leaderboard, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(invite, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(quit, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 135, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(menu, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(46, 46, 46)
+                .addComponent(menuText)
+                .addGap(18, 18, 18)
+                .addComponent(invite)
+                .addGap(18, 18, 18)
+                .addComponent(leaderboard)
+                .addGap(18, 18, 18)
+                .addComponent(quit)
+                .addContainerGap(123, Short.MAX_VALUE))
         );
 
         pack();
@@ -142,6 +144,11 @@ this.addWindowListener(new java.awt.event.WindowAdapter() {
             } catch (Exception ex) {
                 Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
+        if(source.equals(leaderboard)){
+            threadRun = false;
+            dispose();
+            Leaderboard l = new Leaderboard(uname, db);
         }
     }
     
