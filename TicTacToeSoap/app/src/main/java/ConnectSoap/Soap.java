@@ -557,20 +557,19 @@ public class Soap{
             @Override
             public void run() {
 
-
+                System.out.println("poop ");
                 SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-                request.addProperty("joiner", joiner);
-
+                request.addProperty("uname", joiner);
                 SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
-
                 envelope.setOutputSoapObject(request);
-
                 HttpTransportSE ht = new HttpTransportSE(URL);
                 try {
                     ht.call(SOAP_ACTION, envelope);
                     try {
                         SoapPrimitive response = (SoapPrimitive) envelope.getResponse();
-                        returner = response.toString();
+                        String temp=response.toString();
+                        System.out.println(temp);
+                        returner = temp;
                     }
                     catch(Exception e){
                         returner = "";

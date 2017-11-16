@@ -30,6 +30,7 @@ public class Game extends AppCompatActivity {
     private int numSquares;
     private TextView curPlayerID;
     int x;
+    int xfug;
     private Button[] squares  = new Button[9];
     private Button quit;
     private int numSides;
@@ -89,19 +90,16 @@ public class Game extends AppCompatActivity {
 
                         temp = db.getTurn(jName);
                         if(!temp.equals(lastTurn)){
-                            System.out.println("dis");
                             lastTurn = temp;
                             String[] move = lastTurn.split(",");
                             if(move[0].equals("MOVE")){
-                                System.out.println("das");
                                 if(move[1].matches("[0-9]")){
-                                    x =Integer.parseInt(move[1]);
+                                    xfug =Integer.parseInt(move[1]);
                                     Handler handler = new Handler(Looper.getMainLooper());
                                     handler.post(new Runnable() {
                                         @Override
                                         public void run() {
-                                            play(x);
-                                            squares[x].setBackgroundColor(playerBadge[player]);
+                                            play(xfug);
                                         }
                                     });
                                     db.resetGame(jName);
@@ -134,6 +132,13 @@ public class Game extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 db.setMove("QUIT",uName);
+                threadRun = false;
+                try {
+                    t.join(1500);
+                    System.out.println("Thread good");
+                } catch (InterruptedException e) {
+                    System.out.println("Thread fail");
+                }
                 Intent myIntent = new Intent(Game.this, Menu.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("Code", uName);
@@ -222,6 +227,16 @@ public class Game extends AppCompatActivity {
 
 
     }
+    protected void onPause(){
+        super.onPause();
+        threadRun = false;
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        finish();
+    }
     private void quit() {
         try {
             threadRun = false;
@@ -231,6 +246,11 @@ public class Game extends AppCompatActivity {
             System.out.println("nice");
         }
         db.setOnline(uName);
+        Intent myIntent = new Intent(Game.this, Menu.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("Code", uName);
+        myIntent.putExtras(bundle);
+        startActivity(myIntent);
     }
 
     private void play(int n){
@@ -244,21 +264,20 @@ public class Game extends AppCompatActivity {
             if(!taken(n) && numSquares > 0) {
 
                 System.out.println("works?");
-                squares[n].setBackgroundColor(playerBadge[player]);
-
+                squares[n].setBackgroundColor(playerBadge[getPlayer()]);
+                System.out.println("you slut");
                 int y = n%numSides;
                 int x = (int) n/numSides;
                 takeSquare(x, y, player);
                 gameState = getGameState(player);
+                System.out.println(gameState);
                 switch(gameState) {
                     case -2:
-                        player=getPlayer();
                         numSquares = numSquares - 1;
                         if(turn)
                             curPlayerID.setText("It's your move");
                         else
                             curPlayerID.setText("It's player " +jName+ "'s move");
-
                         curPlayerID.setBackgroundColor(playerBadge[player]);
                         break;
 
@@ -276,11 +295,12 @@ public class Game extends AppCompatActivity {
                         }
                         curPlayerID.setBackgroundColor(Color.CYAN);
                         if(turn){
-                            curPlayerID.setText("Game over.\n You Won!");
+                            curPlayerID.setText("Game over.\n You lost!");
                             db.setWin(uName);
                         }
                         else{
-                            curPlayerID.setText("Game over.\n You Lost!");
+                            curPlayerID.setBackgroundColor(Color.CYAN);
+                            curPlayerID.setText("Game over.\n You Won!");
                             db.setLoss(uName);
                         }
 
@@ -290,13 +310,15 @@ public class Game extends AppCompatActivity {
                         for(int i = 0; i < squares.length ; i++){
                             squares[i].setClickable(false);
                         }
-                        curPlayerID.setBackgroundColor(Color.CYAN);
+
                         if(turn){
-                            curPlayerID.setText("Game over.\n You Won!");
+                            curPlayerID.setBackgroundColor(Color.CYAN);
+                            curPlayerID.setText("Game over.\n You Lost!");
                             db.setWin(uName);
                         }
                         else{
-                            curPlayerID.setText("Game over.\n You Lost!");
+                            curPlayerID.setBackgroundColor(Color.CYAN);
+                            curPlayerID.setText("Game over.\n You Won!");
                             db.setLoss(uName);
                         }
                         break;
@@ -324,21 +346,26 @@ public class Game extends AppCompatActivity {
         for(int i=0;i<numSides;i++) {
             if(board[i][0] == p && board[i][1] == p && board[i][2] == p) {
                 state = p;
+                System.out.println("1st");
             }
             if(board[0][i] == p && board[1][i] == p && board[2][i] == p) {
                 state = p;
+                System.out.println("2nd");
             }
         }
 
         if(board[0][0] == p && board[1][1] == p && board[2][2] == p) {
             state = p;
+            System.out.println("3rd");
         }
         if(board[0][2] == p && board[1][1] == p && board[2][0] == p) {
             state = p;
+            System.out.println("4th");
         }
 
         if(numSquares == 1) {
             state = -1;
+            System.out.println("5th");
         }
         return state;
     }
@@ -348,7 +375,7 @@ public class Game extends AppCompatActivity {
     }
 
     public void takeSquare(int x, int y, int p) {
-        board[x][y] = -1;
+        board[x][y] = player;
     }
 
     public boolean taken(int n) {

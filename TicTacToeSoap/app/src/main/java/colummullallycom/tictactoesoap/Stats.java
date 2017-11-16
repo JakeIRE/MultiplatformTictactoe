@@ -24,7 +24,8 @@ public class Stats extends AppCompatActivity {
         Intent iin= getIntent();
         Bundle b = iin.getExtras();
         String uName = b.getString("Code");
-        stbx.setText(db.getStats(uName));
+        String stat=db.getStats(uName);
+        stbx.setText(stat);
     }
 
     protected void onStart() {
