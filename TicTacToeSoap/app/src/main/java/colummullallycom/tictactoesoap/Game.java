@@ -33,6 +33,7 @@ public class Game extends AppCompatActivity {
     private Button[] squares  = new Button[9];
     private Button quit;
     private int numSides;
+    String temp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,14 +83,17 @@ public class Game extends AppCompatActivity {
             public void run() {
                 while(threadRun){
                     String lastTurn = null;
-                    String temp = null;
+                    temp = null;
 
                     try {
+
                         temp = db.getTurn(jName);
                         if(!temp.equals(lastTurn)){
+                            System.out.println("dis");
                             lastTurn = temp;
                             String[] move = lastTurn.split(",");
                             if(move[0].equals("MOVE")){
+                                System.out.println("das");
                                 if(move[1].matches("[0-9]")){
                                     x =Integer.parseInt(move[1]);
                                     Handler handler = new Handler(Looper.getMainLooper());
@@ -360,5 +364,9 @@ public class Game extends AppCompatActivity {
         }
     }
 
-
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        db.setOffline(uName);
+    }
 }

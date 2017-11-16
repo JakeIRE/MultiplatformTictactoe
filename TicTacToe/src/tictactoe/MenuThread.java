@@ -33,12 +33,13 @@ public class MenuThread extends Thread{
         while(m.active() && threadRun){
             try {
                 gameStart = db.checkGameStart(uname);
-                if(!gameStart.equals("")){
+                if(!(gameStart.length() < 1)){
                     m.nextScreen(gameStart);
                     threadRun = false;
+                } else {
                 }
                 joiner = db.getJoiner(uname);
-                if(!joiner.equals("") || m.getBoolDisplay()){
+                if(!(joiner.length() < 1) || m.getBoolDisplay()){
                     m.setBoolDisplay();
                     m.displayJoinerOption(joiner);
                 }
