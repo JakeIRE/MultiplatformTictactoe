@@ -50,8 +50,8 @@ public class Game extends AppCompatActivity {
 
         playerBadge = new int[2];
 
-        playerBadge[0] =  0xff5733 ;
-        playerBadge[1] =  0x5eff33 ;
+        playerBadge[0] =  Color.RED ;
+        playerBadge[1] =  Color.GREEN ;
 
 
 
@@ -100,6 +100,18 @@ public class Game extends AppCompatActivity {
         t.start();
 
     }
+    @Override
+    protected void onStart(){
+        super.onStart();
+        squares[0].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //play(0);
+               db.setMove("MOVE,0",uName);
+                squares[0].setBackgroundColor(playerBadge[player]);
+            }
+        });
+    }
     private void quit() {
         try {
             threadRun = false;
@@ -120,6 +132,7 @@ public class Game extends AppCompatActivity {
 
         if(gameState == -2) {
             if(!taken(n) && numSquares > 0) {
+                System.out.println("works?");
                 squares[n].setBackgroundColor(playerBadge[player]);
                 int y = n%numSides;
                 int x = (int) n/numSides;

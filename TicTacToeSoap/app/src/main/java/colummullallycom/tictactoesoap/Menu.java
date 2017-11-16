@@ -23,7 +23,7 @@ import static java.lang.Thread.sleep;
 public class Menu extends AppCompatActivity {
     String uName;
     Thread t;
-    String joiner, joiner2;
+    String joiner, joiner2, gameStart;
     Button quitBtn,inviteBtn,leaderboardBtn, accept, deny, statBtn;
     TextView texty;
     String type = "O";
@@ -44,7 +44,7 @@ public class Menu extends AppCompatActivity {
         texty.setVisibility(View.INVISIBLE);
         accept.setVisibility(View.INVISIBLE);
         deny.setVisibility(View.INVISIBLE);
-        db.denyGame(uName);
+        db.setOnline(uName);
         inviteBtn = (Button) findViewById(R.id.button9);
         t =  new Thread(new Runnable() {
             @Override
@@ -52,7 +52,7 @@ public class Menu extends AppCompatActivity {
                 while(threadRun){
                     try {
                         sleep(1000);
-                        String gameStart = db.checkGameStart(uName);
+                        gameStart = db.checkGameStart(uName);
                         if(!gameStart.equals("")){
                             threadRun = false;
                         }
@@ -65,13 +65,33 @@ public class Menu extends AppCompatActivity {
                         System.out.println(ex.toString());
                     }
                 }
-
-                startActivityFromMainThread();
+                if(gameStart.equals("")) {
+                    startActivityFromMainThread();
+                }
+                else{
+                    startGame(gameStart);
+                }
 
             }
         });
         t.start();
         leaderboardBtn=(Button)findViewById(R.id.button4);
+    }
+
+    private void startGame(String gameStart) {
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                Intent myIntent=new Intent(Menu.this,Game.class);
+                Bundle bundle= new Bundle();
+                bundle.putString("Code",uName);
+                bundle.putString("Code1",joiner);
+                bundle.putString("Code3","O");
+                myIntent.putExtras(bundle);
+                startActivity(myIntent);
+            }
+        });
     }
 
     private void nextScreen(String gameStart) {
