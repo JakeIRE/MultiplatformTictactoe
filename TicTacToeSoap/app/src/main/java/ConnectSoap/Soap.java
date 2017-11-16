@@ -182,7 +182,6 @@ public class Soap{
 
                 try {
                     ht.call(SOAP_ACTION, envelope);
-
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

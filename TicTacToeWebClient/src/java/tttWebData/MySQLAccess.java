@@ -228,13 +228,32 @@ private void writeMetaData(ResultSet resultSet) throws SQLException {
         connectDataBase();
     try {
         preparedStatement = connect
-          .prepareStatement("UPDATE tictactoe1.players set gamestate = ?, joiner = ?, startGame = ? where uname = ? ;");
+          .prepareStatement("UPDATE tictactoe1.players set gamestate = ? where uname = ? ;");
         // "myuser, webpage, datum, summery, COMMENTS from FEEDBACK.COMMENTS");
         // Parameters start with 1
         preparedStatement.setString(1, "ONLINE");
-        preparedStatement.setString(2, null);
-        preparedStatement.setString(3, null);
-        preparedStatement.setString(4, u);
+        preparedStatement.setString(2, u);
+      preparedStatement.executeUpdate();
+      preparedStatement = connect
+          .prepareStatement("UPDATE tictactoe1.players set startGame = ? where uname = ? ;");
+        // "myuser, webpage, datum, summery, COMMENTS from FEEDBACK.COMMENTS");
+        // Parameters start with 1
+        preparedStatement.setString(1, null);
+        preparedStatement.setString(2, u);
+      preparedStatement.executeUpdate();
+      preparedStatement = connect
+          .prepareStatement("UPDATE tictactoe1.players set lastMove = ? where uname = ? ;");
+        // "myuser, webpage, datum, summery, COMMENTS from FEEDBACK.COMMENTS");
+        // Parameters start with 1
+        preparedStatement.setString(1, null);
+        preparedStatement.setString(2, u);
+      preparedStatement.executeUpdate();
+      preparedStatement = connect
+          .prepareStatement("UPDATE tictactoe1.players set joiner = ? where uname = ? ;");
+        // "myuser, webpage, datum, summery, COMMENTS from FEEDBACK.COMMENTS");
+        // Parameters start with 1
+        preparedStatement.setString(1, null);
+        preparedStatement.setString(2, u);
       preparedStatement.executeUpdate();
     }
     catch(Exception e){

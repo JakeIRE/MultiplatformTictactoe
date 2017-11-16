@@ -31,6 +31,7 @@ public class Game extends AppCompatActivity {
     private TextView curPlayerID;
     int x;
     private Button[] squares  = new Button[9];
+    private Button quit;
     private int numSides;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +40,7 @@ public class Game extends AppCompatActivity {
         curPlayerID=(TextView) findViewById(R.id.UpdateBox);
         Intent iin= getIntent();
         Bundle b = iin.getExtras();
+        quit=(Button) findViewById(R.id.qb);
         gameState = -2;
         player = 1;
         numSides = 3;
@@ -111,6 +113,11 @@ public class Game extends AppCompatActivity {
                         System.out.println("These aren't the bugs youre looking for");
                     }
                 }
+                try {
+                    sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
         t.start();
@@ -119,6 +126,17 @@ public class Game extends AppCompatActivity {
     @Override
     protected void onStart(){
         super.onStart();
+        quit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                db.setMove("QUIT",uName);
+                Intent myIntent = new Intent(Game.this, Menu.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("Code", uName);
+                myIntent.putExtras(bundle);
+                startActivity(myIntent);
+            }
+        });
         squares[0].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -203,17 +221,21 @@ public class Game extends AppCompatActivity {
     private void quit() {
         try {
             threadRun = false;
+            t.sleep(1000);
+            t.join();
         } catch (Exception ex) {
             System.out.println("nice");
         }
+        db.setOnline(uName);
     }
 
     private void play(int n){
+
+
         if(turn)
             turn = false;
         else
             turn = true;
-
         if(gameState == -2) {
             if(!taken(n) && numSquares > 0) {
 
@@ -226,7 +248,6 @@ public class Game extends AppCompatActivity {
                 gameState = getGameState(player);
                 switch(gameState) {
                     case -2:
-                        player = getPlayer();
                         numSquares = numSquares - 1;
                         if(turn)
                             curPlayerID.setText("It's your move");
@@ -237,34 +258,51 @@ public class Game extends AppCompatActivity {
                         break;
 
                     case -1:
-                        //JOptionPane.showMessageDialog(null, "Game over.\n It's a draw", "Drawn Game!", INFORMATION_MESSAGE);
+                        for(int i = 0; i < squares.length ; i++){
+                            squares[i].setClickable(false);
+                        }
+                        curPlayerID.setText("Game over.\nIts a draw\n you people bore me!");
                         db.setDraw(uName);
                         break;
 
                     case 0:
-                        //JOptionPane.showMessageDialog(null, "Game over.\n Player 1 Wins!", "PLAYER 1 WINS!", INFORMATION_MESSAGE);
-                        if(type.equals("X"))
+                        for(int i = 0; i < squares.length ; i++){
+                            squares[i].setClickable(false);
+                        }
+                        curPlayerID.setBackgroundColor(Color.CYAN);
+                        if(turn){
+                            curPlayerID.setText("Game over.\n You Won!");
                             db.setWin(uName);
-                        else
+                        }
+                        else{
+                            curPlayerID.setText("Game over.\n You Lost!");
                             db.setLoss(uName);
+                        }
 
                         break;
 
                     case 1:
-                        //JOptionPane.showMessageDialog(null, "Game over.\n Player 2 Wins!", "PLAYER 2 WINS!", INFORMATION_MESSAGE);
-                        if(!type.equals("X"))
+                        for(int i = 0; i < squares.length ; i++){
+                            squares[i].setClickable(false);
+                        }
+                        curPlayerID.setBackgroundColor(Color.CYAN);
+                        if(turn){
+                            curPlayerID.setText("Game over.\n You Won!");
                             db.setWin(uName);
-                        else
+                        }
+                        else{
+                            curPlayerID.setText("Game over.\n You Lost!");
                             db.setLoss(uName);
+                        }
                         break;
 
                     default:
                 }
             } else {
-                //JOptionPane.showMessageDialog(null, "That square is already taken.\n Please try again.", "Square taken!", ERROR_MESSAGE);
+                curPlayerID.setText("That square is already taken.\n Please try again.");
             }
         } else {
-            //6JOptionPane.showMessageDialog(null, "Game Over.\n Please press reset to restart.", "Game Over", ERROR_MESSAGE);
+            curPlayerID.setText("Be sure to quit first");
         }
     }
 

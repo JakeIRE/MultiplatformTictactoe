@@ -41,7 +41,7 @@ public class Login extends AppCompatActivity {
                 password=passwordIn.getText().toString();
                 //TODO
                 //checks and stuff
-                if(uName.length() < 1 || password.length() < 1) {
+                if(uName.length() > 0 && password.length() > 0) {
                     Soap db = new Soap();
                     String output = null;
                     output = db.loginVerify(uName, password);
@@ -72,11 +72,11 @@ public class Login extends AppCompatActivity {
                     password=passwordIn.getText().toString();
                     //TODO
                     //checks and stuff
-                    if(uName.length() < 1 || password.length() < 1) {
+                    if(uName.length() > 0 && password.length() > 0) {
                         if(uName.length() < 21) {
                             Soap db = new Soap();
                             String output = null;
-                            output = db.loginVerify(uName, password);
+                            output = db.register(uName, password);
                             updates.setText(output);
                             updates.setBackgroundColor(Color.RED);
                             if (output.equals("")) {
