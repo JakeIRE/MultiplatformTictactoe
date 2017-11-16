@@ -184,14 +184,8 @@ public class Menu extends AppCompatActivity {
         quitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                threadRun = false;
-                try {
-                    t.join();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                db.setOffline(uName);
-                moveTaskToBack(true);
+                finish();
+                System.exit(0);
             }
         });
 
