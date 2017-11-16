@@ -244,7 +244,7 @@ public class Game extends AppCompatActivity {
             if(!taken(n) && numSquares > 0) {
 
                 System.out.println("works?");
-                squares[n].setBackgroundColor(playerBadge[getPlayer()]);
+                squares[n].setBackgroundColor(playerBadge[player]);
 
                 int y = n%numSides;
                 int x = (int) n/numSides;
@@ -252,6 +252,7 @@ public class Game extends AppCompatActivity {
                 gameState = getGameState(player);
                 switch(gameState) {
                     case -2:
+                        player=getPlayer();
                         numSquares = numSquares - 1;
                         if(turn)
                             curPlayerID.setText("It's your move");
