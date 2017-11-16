@@ -26,7 +26,7 @@ public class Menu extends AppCompatActivity {
     boolean once = false;
     int count=0;
     String joiner, joiner2, gameStart;
-    Button quitBtn,inviteBtn,leaderboardBtn, statBtn;
+    Button inviteBtn,leaderboardBtn, statBtn;
     String type = "O";
     Soap db = new Soap();
     boolean threadRun = true;
@@ -38,7 +38,6 @@ public class Menu extends AppCompatActivity {
         Intent iin= getIntent();
         Bundle b = iin.getExtras();
         statBtn = (Button) findViewById(R.id.button8);
-        quitBtn=(Button) findViewById(R.id.button6);
         uName = (String) b.get("Code");
         db.setOnline(uName);
         inviteBtn = (Button) findViewById(R.id.button9);
@@ -181,15 +180,6 @@ public class Menu extends AppCompatActivity {
             }
         });
 
-
-
-        quitBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-                System.exit(0);
-            }
-        });
 
         statBtn.setOnClickListener(new View.OnClickListener() {
             @Override
