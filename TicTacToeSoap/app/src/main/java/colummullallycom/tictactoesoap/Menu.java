@@ -72,7 +72,7 @@ public class Menu extends AppCompatActivity {
         leaderboardBtn=(Button)findViewById(R.id.button4);
     }
 
-    private void startGame(String gameStart) {
+    private void startGame(final String gameStart) {
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(new Runnable() {
             @Override
@@ -80,7 +80,7 @@ public class Menu extends AppCompatActivity {
                 Intent myIntent=new Intent(Menu.this,Game.class);
                 Bundle bundle= new Bundle();
                 bundle.putString("Code",uName);
-                bundle.putString("Code1",joiner);
+                bundle.putString("Code1",gameStart);
                 bundle.putString("Code3","O");
                 myIntent.putExtras(bundle);
                 startActivity(myIntent);
