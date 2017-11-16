@@ -23,6 +23,8 @@ import static java.lang.Thread.sleep;
 public class Menu extends AppCompatActivity {
     String uName;
     Thread t;
+    boolean once = false;
+    int count=0;
     String joiner, joiner2, gameStart;
     Button quitBtn,inviteBtn,leaderboardBtn, statBtn;
     String type = "O";
@@ -47,11 +49,12 @@ public class Menu extends AppCompatActivity {
                     try {
                         sleep(1000);
                         gameStart = db.checkGameStart(uName);
-                        if(!gameStart.equals("")){
+                        if(!gameStart.equals("") && threadRun){
                             threadRun = false;
+                            startGame(gameStart);
                         }
                         joiner = db.getJoiner(uName);
-                        if(!joiner.equals("") && !displayJoiner){
+                        if(!joiner.equals("") && !displayJoiner && threadRun){
                             threadRun = false;
 
                         }
@@ -59,13 +62,6 @@ public class Menu extends AppCompatActivity {
                         System.out.println(ex.toString());
                     }
                 }
-                if(gameStart.equals("")) {
-                    startActivityFromMainThread();
-                }
-                else{
-                    startGame(gameStart);
-                }
-
             }
         });
         t.start();
@@ -77,13 +73,17 @@ public class Menu extends AppCompatActivity {
         handler.post(new Runnable() {
             @Override
             public void run() {
+                if(!once&&count==0){
+                    once = true;
+                    count++;
                 Intent myIntent=new Intent(Menu.this,Game.class);
                 Bundle bundle= new Bundle();
                 bundle.putString("Code",uName);
                 bundle.putString("Code1",gameStart);
                 bundle.putString("Code3","O");
+
                 myIntent.putExtras(bundle);
-                startActivity(myIntent);
+                startActivity(myIntent);}
             }
         });
     }
@@ -96,6 +96,7 @@ public class Menu extends AppCompatActivity {
     protected void onResume(){
         super.onResume();
         t.start();
+        once = false;
     }
 
     public void startActivityFromMainThread(){
@@ -133,6 +134,10 @@ public class Menu extends AppCompatActivity {
         super.onDestroy();
         threadRun = false;
     }*/
+    protected void onPause(){
+        super.onPause();
+        finish();
+    }
     protected void onStart() {
         super.onStart();
         leaderboardBtn.setOnClickListener(new View.OnClickListener() {

@@ -30,6 +30,7 @@ public class Game extends AppCompatActivity {
     private int numSquares;
     private TextView curPlayerID;
     int x;
+    int xfug;
     private Button[] squares  = new Button[9];
     private Button quit;
     private int numSides;
@@ -82,6 +83,7 @@ public class Game extends AppCompatActivity {
             @Override
             public void run() {
                 while(threadRun){
+                    System.out.println("hitting thread");
                     String lastTurn = null;
                     temp = null;
 
@@ -89,19 +91,18 @@ public class Game extends AppCompatActivity {
 
                         temp = db.getTurn(jName);
                         if(!temp.equals(lastTurn)){
-                            System.out.println("dis");
                             lastTurn = temp;
                             String[] move = lastTurn.split(",");
                             if(move[0].equals("MOVE")){
                                 System.out.println("das");
                                 if(move[1].matches("[0-9]")){
-                                    x =Integer.parseInt(move[1]);
+                                    xfug =Integer.parseInt(move[1]);
                                     Handler handler = new Handler(Looper.getMainLooper());
                                     handler.post(new Runnable() {
                                         @Override
                                         public void run() {
-                                            play(x);
-                                            squares[x].setBackgroundColor(playerBadge[player]);
+                                            play(xfug);
+                                            System.out.println("hitting play");
                                         }
                                     });
                                     db.resetGame(jName);
@@ -134,6 +135,13 @@ public class Game extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 db.setMove("QUIT",uName);
+                threadRun = false;
+                try {
+                    t.join(1500);
+                    System.out.println("Thread good");
+                } catch (InterruptedException e) {
+                    System.out.println("Thread fail");
+                }
                 Intent myIntent = new Intent(Game.this, Menu.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("Code", uName);
@@ -222,6 +230,16 @@ public class Game extends AppCompatActivity {
 
 
     }
+    protected void onPause(){
+        super.onPause();
+        threadRun = false;
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        finish();
+    }
     private void quit() {
         try {
             threadRun = false;
@@ -231,6 +249,11 @@ public class Game extends AppCompatActivity {
             System.out.println("nice");
         }
         db.setOnline(uName);
+        Intent myIntent = new Intent(Game.this, Menu.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("Code", uName);
+        myIntent.putExtras(bundle);
+        startActivity(myIntent);
     }
 
     private void play(int n){
@@ -244,21 +267,20 @@ public class Game extends AppCompatActivity {
             if(!taken(n) && numSquares > 0) {
 
                 System.out.println("works?");
-                squares[n].setBackgroundColor(playerBadge[player]);
-
+                squares[n].setBackgroundColor(playerBadge[getPlayer()]);
+                System.out.println("you slut");
                 int y = n%numSides;
                 int x = (int) n/numSides;
                 takeSquare(x, y, player);
                 gameState = getGameState(player);
+                System.out.println(gameState);
                 switch(gameState) {
                     case -2:
-                        player=getPlayer();
                         numSquares = numSquares - 1;
                         if(turn)
                             curPlayerID.setText("It's your move");
                         else
                             curPlayerID.setText("It's player " +jName+ "'s move");
-
                         curPlayerID.setBackgroundColor(playerBadge[player]);
                         break;
 
