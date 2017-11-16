@@ -81,7 +81,8 @@ public class Game extends AppCompatActivity {
                             if(move[0].equals("MOVE")){
                                 if(move[1].matches("[0-9]")){
                                     disableReset();
-                                    play(Integer.parseInt(move[1]));
+                                   int x =Integer.parseInt(move[1]);
+                                    squares[x].setBackgroundColor(playerBadge[player]);
                                     db.resetGame(jName);
                                 }
 
@@ -111,6 +112,69 @@ public class Game extends AppCompatActivity {
                 squares[0].setBackgroundColor(playerBadge[player]);
             }
         });
+        squares[1].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //play(0);
+                db.setMove("MOVE,1",uName);
+                squares[1].setBackgroundColor(playerBadge[player]);
+            }
+        });
+        squares[2].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //play(0);
+                db.setMove("MOVE,2",uName);
+                squares[2].setBackgroundColor(playerBadge[player]);
+            }
+        });
+        squares[3].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //play(0);
+                db.setMove("MOVE,3",uName);
+                squares[3].setBackgroundColor(playerBadge[player]);
+            }
+        });squares[4].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //play(0);
+                db.setMove("MOVE,4",uName);
+                squares[4].setBackgroundColor(playerBadge[player]);
+            }
+        });squares[5].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //play(0);
+                db.setMove("MOVE,5",uName);
+                squares[5].setBackgroundColor(playerBadge[player]);
+            }
+        });squares[6].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //play(0);
+                db.setMove("MOVE,6",uName);
+                squares[6].setBackgroundColor(playerBadge[player]);
+            }
+        });squares[7].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //play(0);
+                db.setMove("MOVE,7",uName);
+                squares[7].setBackgroundColor(playerBadge[player]);
+            }
+        });squares[8].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //play(0);
+                db.setMove("MOVE,8",uName);
+                squares[8].setBackgroundColor(playerBadge[player]);
+            }
+        });
+
+
+
+
     }
     private void quit() {
         try {
