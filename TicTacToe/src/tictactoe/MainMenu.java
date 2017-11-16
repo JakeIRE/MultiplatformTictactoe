@@ -156,7 +156,6 @@ this.addWindowListener(new java.awt.event.WindowAdapter() {
         else {
             inviteBool = false;
             db.denyGame(uname);
-            threadRun = false;
         }
     }
 

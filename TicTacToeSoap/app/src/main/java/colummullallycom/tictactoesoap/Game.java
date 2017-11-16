@@ -2,6 +2,8 @@ package colummullallycom.tictactoesoap;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.IdRes;
 import android.support.annotation.StringDef;
 import android.support.v7.app.AppCompatActivity;
@@ -27,6 +29,7 @@ public class Game extends AppCompatActivity {
     private String type;
     private int numSquares;
     private TextView curPlayerID;
+    int x;
     private Button[] squares  = new Button[9];
     private int numSides;
     @Override
@@ -37,7 +40,7 @@ public class Game extends AppCompatActivity {
         Intent iin= getIntent();
         Bundle b = iin.getExtras();
         gameState = -2;
-        player = 0;
+        player = 1;
         numSides = 3;
         numSquares = 9;
         uName = (String) b.get("Code");
@@ -49,10 +52,15 @@ public class Game extends AppCompatActivity {
             turn = false;
 
         playerBadge = new int[2];
-
+        board = new int[numSides][numSides];
         playerBadge[0] =  Color.RED ;
         playerBadge[1] =  Color.GREEN ;
-
+        for(int i=0;i<numSides;i++) {
+            for(int j=0;j<numSides;j++) {
+                board[i][j] = -1;
+                int pos = ((i*numSides) + j);
+            }
+        }
 
 
 
@@ -73,6 +81,7 @@ public class Game extends AppCompatActivity {
                 while(threadRun){
                     String lastTurn = null;
                     String temp = null;
+
                     try {
                         temp = db.getTurn(jName);
                         if(!temp.equals(lastTurn)){
@@ -80,9 +89,15 @@ public class Game extends AppCompatActivity {
                             String[] move = lastTurn.split(",");
                             if(move[0].equals("MOVE")){
                                 if(move[1].matches("[0-9]")){
-                                    disableReset();
-                                   int x =Integer.parseInt(move[1]);
-                                    squares[x].setBackgroundColor(playerBadge[player]);
+                                    x =Integer.parseInt(move[1]);
+                                    Handler handler = new Handler(Looper.getMainLooper());
+                                    handler.post(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            play(x);
+                                            squares[x].setBackgroundColor(playerBadge[player]);
+                                        }
+                                    });
                                     db.resetGame(jName);
                                 }
 
@@ -107,68 +122,77 @@ public class Game extends AppCompatActivity {
         squares[0].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //play(0);
-               db.setMove("MOVE,0",uName);
-                squares[0].setBackgroundColor(playerBadge[player]);
+                if(turn){
+                    play(0);
+                   db.setMove("MOVE,0",uName);}
+               // squares[0].setBackgroundColor(playerBadge[player]);
             }
         });
         squares[1].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //play(0);
-                db.setMove("MOVE,1",uName);
-                squares[1].setBackgroundColor(playerBadge[player]);
+                if(turn){
+                play(1);
+                db.setMove("MOVE,1",uName);}
+                //squares[1].setBackgroundColor(playerBadge[player]);
             }
         });
         squares[2].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //play(0);
-                db.setMove("MOVE,2",uName);
-                squares[2].setBackgroundColor(playerBadge[player]);
+                    if(turn){
+                play(2);
+                db.setMove("MOVE,2",uName);}
+               // squares[2].setBackgroundColor(playerBadge[player]);
             }
         });
         squares[3].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //play(0);
-                db.setMove("MOVE,3",uName);
-                squares[3].setBackgroundColor(playerBadge[player]);
+                if(turn){
+                play(3);
+                db.setMove("MOVE,3",uName);}
+               // squares[3].setBackgroundColor(playerBadge[player]);
             }
         });squares[4].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //play(0);
-                db.setMove("MOVE,4",uName);
-                squares[4].setBackgroundColor(playerBadge[player]);
+                    if(turn){
+                play(4);
+                db.setMove("MOVE,4",uName);}
+               // squares[4].setBackgroundColor(playerBadge[player]);
             }
         });squares[5].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //play(0);
-                db.setMove("MOVE,5",uName);
-                squares[5].setBackgroundColor(playerBadge[player]);
+                if(turn){
+                play(5);
+                db.setMove("MOVE,5",uName);}
+               // squares[5].setBackgroundColor(playerBadge[player]);
             }
         });squares[6].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //play(0);
-                db.setMove("MOVE,6",uName);
-                squares[6].setBackgroundColor(playerBadge[player]);
+                            if(turn){
+                play(6);
+                db.setMove("MOVE,6",uName);}
+               // squares[6].setBackgroundColor(playerBadge[player]);
             }
         });squares[7].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //play(0);
-                db.setMove("MOVE,7",uName);
-                squares[7].setBackgroundColor(playerBadge[player]);
+                if(turn){
+                play(7);
+                db.setMove("MOVE,7",uName);}
+              //  squares[7].setBackgroundColor(playerBadge[player]);
             }
         });squares[8].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //play(0);
-                db.setMove("MOVE,8",uName);
-                squares[8].setBackgroundColor(playerBadge[player]);
+                if(turn){
+                play(8);
+                db.setMove("MOVE,8",uName);}
+                //squares[8].setBackgroundColor(playerBadge[player]);
             }
         });
 
@@ -184,20 +208,18 @@ public class Game extends AppCompatActivity {
         }
     }
 
-    private void disableReset() {
-    }
-
     private void play(int n){
         if(turn)
             turn = false;
         else
             turn = true;
 
-
         if(gameState == -2) {
             if(!taken(n) && numSquares > 0) {
+
                 System.out.println("works?");
-                squares[n].setBackgroundColor(playerBadge[player]);
+                squares[n].setBackgroundColor(playerBadge[getPlayer()]);
+
                 int y = n%numSides;
                 int x = (int) n/numSides;
                 takeSquare(x, y, player);
@@ -210,6 +232,7 @@ public class Game extends AppCompatActivity {
                             curPlayerID.setText("It's your move");
                         else
                             curPlayerID.setText("It's player " +jName+ "'s move");
+
                         curPlayerID.setBackgroundColor(playerBadge[player]);
                         break;
 
@@ -282,7 +305,7 @@ public class Game extends AppCompatActivity {
     }
 
     public void takeSquare(int x, int y, int p) {
-        board[x][y] = player;
+        board[x][y] = -1;
     }
 
     public boolean taken(int n) {
@@ -291,8 +314,10 @@ public class Game extends AppCompatActivity {
 
         board = getBoard();
         if(board[x][y] == -1) {
+            curPlayerID.setText("Its there");
             return false;
         } else {
+            curPlayerID.setText("Its not there");
             return true;
         }
     }
