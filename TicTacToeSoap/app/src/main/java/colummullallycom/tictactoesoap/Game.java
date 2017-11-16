@@ -298,10 +298,12 @@ public class Game extends AppCompatActivity {
                         }
                         curPlayerID.setBackgroundColor(Color.CYAN);
                         if(turn){
+                            curPlayerID.setBackgroundColor(Color.CYAN);
                             curPlayerID.setText("Game over.\n You Won!");
                             db.setWin(uName);
                         }
                         else{
+                            curPlayerID.setBackgroundColor(Color.CYAN);
                             curPlayerID.setText("Game over.\n You Lost!");
                             db.setLoss(uName);
                         }
@@ -312,12 +314,14 @@ public class Game extends AppCompatActivity {
                         for(int i = 0; i < squares.length ; i++){
                             squares[i].setClickable(false);
                         }
-                        curPlayerID.setBackgroundColor(Color.CYAN);
+
                         if(turn){
+                            curPlayerID.setBackgroundColor(Color.CYAN);
                             curPlayerID.setText("Game over.\n You Won!");
                             db.setWin(uName);
                         }
                         else{
+                            curPlayerID.setBackgroundColor(Color.CYAN);
                             curPlayerID.setText("Game over.\n You Lost!");
                             db.setLoss(uName);
                         }
