@@ -24,8 +24,7 @@ public class Menu extends AppCompatActivity {
     String uName;
     Thread t;
     String joiner, joiner2, gameStart;
-    Button quitBtn,inviteBtn,leaderboardBtn, accept, deny, statBtn;
-    TextView texty;
+    Button quitBtn,inviteBtn,leaderboardBtn, statBtn;
     String type = "O";
     Soap db = new Soap();
     boolean threadRun = true;
@@ -36,14 +35,9 @@ public class Menu extends AppCompatActivity {
         setContentView(R.layout.activity_menu);
         Intent iin= getIntent();
         Bundle b = iin.getExtras();
-        texty = (TextView) findViewById(R.id.textView3);
         statBtn = (Button) findViewById(R.id.button8);
-        accept = (Button) findViewById(R.id.button14);
-        deny = (Button) findViewById(R.id.denybut);
+        quitBtn=(Button) findViewById(R.id.button6);
         uName = (String) b.get("Code");
-        texty.setVisibility(View.INVISIBLE);
-        accept.setVisibility(View.INVISIBLE);
-        deny.setVisibility(View.INVISIBLE);
         db.setOnline(uName);
         inviteBtn = (Button) findViewById(R.id.button9);
         t =  new Thread(new Runnable() {
@@ -180,31 +174,25 @@ public class Menu extends AppCompatActivity {
             }
         });
 
-        deny.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
 
-                texty.setVisibility(View.INVISIBLE);
-                accept.setVisibility(View.INVISIBLE);
-                deny.setVisibility(View.INVISIBLE);
-                inviteBtn.setVisibility(View.VISIBLE);
-                leaderboardBtn.setVisibility(View.VISIBLE);
-                quitBtn.setVisibility(View.VISIBLE);
-                statBtn.setVisibility(View.VISIBLE);
+
+        quitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                System.exit(0);
             }
         });
 
-
-        deny.setOnClickListener(new View.OnClickListener(){
+        statBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
-                threadRun = false;
-                try {
-                    t.join();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                db.checkGameStart(joiner2);
+            public void onClick(View V){
+                Intent myIntent=new Intent(Menu.this,Stats.class);
+                Bundle bundle= new Bundle();
+                bundle.putString("Code",uName);
+                bundle.putString("Code1",uName);
+                myIntent.putExtras(bundle);
+                startActivity(myIntent);
             }
         });
     }

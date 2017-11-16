@@ -71,28 +71,4 @@
         app:layout_constraintVertical_bias="0.668"
         tools:layout_editor_absoluteX="57dp" />
 
-    <Button
-        android:id="@+id/button14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Accept"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="326dp" />
-
-    <Button
-        android:id="@+id/denybut"
-        android:layout_width="83dp"
-        android:layout_height="49dp"
-        android:text="Deny"
-        tools:layout_editor_absoluteX="221dp"
-        tools:layout_editor_absoluteY="316dp" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="302dp"
-        android:layout_height="34dp"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="13dp"
-        tools:layout_editor_absoluteY="178dp" />
-
 </android.support.constraint.ConstraintLayout>
