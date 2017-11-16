@@ -26,20 +26,23 @@ public class Game extends AppCompatActivity {
     private int player;
     private String type;
     private int numSquares;
-    private TextView curPlayerID = (TextView) findViewById(R.id.UpdateBox);
+    private TextView curPlayerID;
     private Button[] squares  = new Button[9];
     private int numSides;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+        curPlayerID=(TextView) findViewById(R.id.UpdateBox);
         Intent iin= getIntent();
         Bundle b = iin.getExtras();
         gameState = -2;
         player = 0;
         numSides = 3;
         numSquares = 9;
-
+        uName = (String) b.get("Code");
+        jName = (String) b.get("Code1");
+        type=(String) b.get("Code3");
         if(type.equals("X"))
             turn = true;
         else
@@ -52,8 +55,7 @@ public class Game extends AppCompatActivity {
 
 
 
-        uName = (String) b.get("Code");
-        jName = (String) b.get("Code1");
+
 
         squares[0] = (Button) findViewById(R.id.button13);
         squares[1] = (Button) findViewById(R.id.button11);
@@ -98,7 +100,6 @@ public class Game extends AppCompatActivity {
         t.start();
 
     }
-
     private void quit() {
         try {
             threadRun = false;

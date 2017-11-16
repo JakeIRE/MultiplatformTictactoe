@@ -243,7 +243,7 @@ public class Soap{
             @Override
             public void run() {
                 SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-                request.addProperty("uname", uname);
+                request.addProperty("u", uname);
                 request.addProperty("joiner", joiner);
 
                 SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
@@ -272,7 +272,7 @@ public class Soap{
             @Override
             public void run() {
                 SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-                request.addProperty("uname", uname);
+                request.addProperty("u", uname);
 
                 SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
                 envelope.setOutputSoapObject(request);

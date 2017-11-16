@@ -32,7 +32,8 @@
         <activity android:name=".Menu" />
         <activity android:name=".Game" />
         <activity android:name=".LeaderBoard" />
-        <activity android:name=".Invite"></activity>
+        <activity android:name=".Invite" />
+        <activity android:name=".inviteQuestion"></activity>
     </application>
 
 </manifest>

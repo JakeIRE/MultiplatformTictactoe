@@ -24,6 +24,7 @@ public class Invite extends AppCompatActivity {
         uName = (String) b.get("Code");
         invitels=(ListView)findViewById(R.id.iList);
         db= new Soap();
+
         String[] values=db.getOptions(uName);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, android.R.id.text1, values);
