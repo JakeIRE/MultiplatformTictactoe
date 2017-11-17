@@ -374,7 +374,7 @@ public class Game extends AppCompatActivity {
     }
 
     public void takeSquare(int x, int y, int p) {
-        board[x][y] = -1;
+        board[x][y] = player;
     }
 
     public boolean taken(int n) {
